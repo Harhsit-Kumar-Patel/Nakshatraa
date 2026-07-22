@@ -36,12 +36,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
     birthDate: '',
     birthTime: '',
     birthPlace: '',
+    gender: '',
 
     // Partner Astrological Details (Conditional)
     partnerName: '',
     partnerBirthDate: '',
     partnerBirthTime: '',
     partnerBirthPlace: '',
+    partnerGender: '',
 
     message: ''
   });
@@ -76,6 +78,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
     if (!formData.birthDate) tempErrors.birthDate = 'Required';
     if (!formData.birthTime) tempErrors.birthTime = 'Required';
     if (!formData.birthPlace.trim()) tempErrors.birthPlace = 'Required';
+    if (!formData.gender) tempErrors.gender = 'Required';
 
     // Partner Details Validation (Only if relational)
     if (isRelational) {
@@ -83,6 +86,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
       if (!formData.partnerBirthDate) tempErrors.partnerBirthDate = 'Required';
       if (!formData.partnerBirthTime) tempErrors.partnerBirthTime = 'Required';
       if (!formData.partnerBirthPlace.trim()) tempErrors.partnerBirthPlace = 'Required';
+      if (!formData.partnerGender) tempErrors.partnerGender = 'Required';
     }
 
     setErrors(tempErrors);
@@ -111,12 +115,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
           time: formData.time,
           
           // Chart Details
+          gender: formData.gender,
           birth_date: formData.birthDate,
           birth_time: formData.birthTime,
           birth_place: formData.birthPlace,
 
           // Conditional Partner Details
           partner_name: isRelational ? formData.partnerName : 'N/A',
+          partner_gender: isRelational ? formData.partnerGender : 'N/A',
           partner_birth_date: isRelational ? formData.partnerBirthDate : 'N/A',
           partner_birth_time: isRelational ? formData.partnerBirthTime : 'N/A',
           partner_birth_place: isRelational ? formData.partnerBirthPlace : 'N/A',
@@ -150,10 +156,12 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
       birthDate: '',
       birthTime: '',
       birthPlace: '',
+      gender: '',
       partnerName: '',
       partnerBirthDate: '',
       partnerBirthTime: '',
       partnerBirthPlace: '',
+      partnerGender: '',
       message: ''
     });
     setIsSubmitted(false);
@@ -327,7 +335,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                 <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
                   3. Birth Details (for Chart Calculation)
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
                   
                   {/* DOB */}
                   <div className="flex flex-col">
@@ -355,7 +363,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                     <input
                       type="text"
                       id="birthTime"
-                      placeholder="e.g., 02:45 PM (or 24 hr)"
+                      placeholder="e.g., 02:45 PM"
                       value={formData.birthTime}
                       onChange={(e) => {
                         setFormData({ ...formData, birthTime: e.target.value });
@@ -367,14 +375,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                   </div>
 
                   {/* POB */}
-                  <div className="flex flex-col col-span-1">
+                  <div className="flex flex-col">
                     <label htmlFor="birthPlace" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Place of Birth *
                     </label>
                     <input
                       type="text"
                       id="birthPlace"
-                      placeholder="City, State, Country"
+                      placeholder="City, Country"
                       value={formData.birthPlace}
                       onChange={(e) => {
                         setFormData({ ...formData, birthPlace: e.target.value });
@@ -383,6 +391,28 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                       className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                     />
                     {errors.birthPlace && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthPlace}</span>}
+                  </div>
+
+                  {/* Gender */}
+                  <div className="flex flex-col">
+                    <label htmlFor="gender" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
+                      Gender *
+                    </label>
+                    <select
+                      id="gender"
+                      value={formData.gender}
+                      onChange={(e) => {
+                        setFormData({ ...formData, gender: e.target.value });
+                        if (errors.gender) setErrors({ ...errors, gender: '' });
+                      }}
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
+                    >
+                      <option value="" disabled className="bg-[#FDFBF7]">Select</option>
+                      <option value="Male" className="bg-[#FDFBF7]">Male</option>
+                      <option value="Female" className="bg-[#FDFBF7]">Female</option>
+                      <option value="Non-binary" className="bg-[#FDFBF7]">Non-binary / Other</option>
+                    </select>
+                    {errors.gender && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.gender}</span>}
                   </div>
 
                 </div>
@@ -401,7 +431,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                     <h4 className="font-heading text-xl text-[#C3B091] font-light border-b border-[#C3B091]/20 pb-2">
                       4. Partner's Birth Details (for Compatibility Assessment)
                     </h4>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
                       
                       {/* Partner Name */}
                       <div className="flex flex-col">
@@ -411,7 +441,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         <input
                           type="text"
                           id="partnerName"
-                          placeholder="Partner's full name"
+                          placeholder="Name"
                           value={formData.partnerName}
                           onChange={(e) => {
                             setFormData({ ...formData, partnerName: e.target.value });
@@ -476,6 +506,28 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                           className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                         />
                         {errors.partnerBirthPlace && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthPlace}</span>}
+                      </div>
+
+                      {/* Partner Gender */}
+                      <div className="flex flex-col">
+                        <label htmlFor="partnerGender" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
+                          Gender *
+                        </label>
+                        <select
+                          id="partnerGender"
+                          value={formData.partnerGender}
+                          onChange={(e) => {
+                            setFormData({ ...formData, partnerGender: e.target.value });
+                            if (errors.partnerGender) setErrors({ ...errors, partnerGender: '' });
+                          }}
+                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
+                        >
+                          <option value="" disabled className="bg-[#FDFBF7]">Select</option>
+                          <option value="Male" className="bg-[#FDFBF7]">Male</option>
+                          <option value="Female" className="bg-[#FDFBF7]">Female</option>
+                          <option value="Non-binary" className="bg-[#FDFBF7]">Non-binary / Other</option>
+                        </select>
+                        {errors.partnerGender && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerGender}</span>}
                       </div>
 
                     </div>
