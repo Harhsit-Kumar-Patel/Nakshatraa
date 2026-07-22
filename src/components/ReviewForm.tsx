@@ -63,14 +63,14 @@ const ReviewForm = () => {
   };
 
   return (
-    <section className="py-24 bg-[#F2EEE5] relative z-10 border-b border-[#1C2A20]/10">
+    <section className="py-24 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
       <div className="max-w-2xl mx-auto px-6 md:px-12">
         
         <div className="text-left mb-12">
-          <h4 className="font-heading text-3xl font-light text-[#1C2A20] mb-2">
+          <h4 className="font-heading text-3xl font-light text-[#1E221F] mb-2">
             Share your experience
           </h4>
-          <p className="font-body text-xs text-[#7E8B82] leading-relaxed">
+          <p className="font-body text-xs text-[#79857B] leading-relaxed">
             Your reflections help us refine our guidance. Submitted feedback is routed to our private practice coordinators.
           </p>
         </div>
@@ -87,7 +87,7 @@ const ReviewForm = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {/* Name */}
                 <div className="flex flex-col">
-                  <label htmlFor="review-name" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                  <label htmlFor="review-name" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                     Name *
                   </label>
                   <input
@@ -99,14 +99,14 @@ const ReviewForm = () => {
                       if (errors.name) setErrors({ ...errors, name: '' });
                     }}
                     placeholder="Your name"
-                    className="py-2.5 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20]"
+                    className="py-2.5 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                   />
                   {errors.name && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.name}</span>}
                 </div>
 
                 {/* Location/Role */}
                 <div className="flex flex-col">
-                  <label htmlFor="review-role" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                  <label htmlFor="review-role" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                     Location or Profession
                   </label>
                   <input
@@ -115,16 +115,16 @@ const ReviewForm = () => {
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                     placeholder="e.g., Designer, Mumbai"
-                    className="py-2.5 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20]"
+                    className="py-2.5 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                   />
                 </div>
               </div>
 
               {/* Review text */}
               <div className="flex flex-col">
-                <label htmlFor="review-content" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                <label htmlFor="review-content" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                   Reflection *
-                  </label>
+                </label>
                 <textarea
                   id="review-content"
                   value={formData.review}
@@ -134,7 +134,7 @@ const ReviewForm = () => {
                   }}
                   placeholder="Write your honest experience about the session..."
                   rows={3}
-                  className="py-2.5 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20] resize-none"
+                  className="py-2.5 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F] resize-none"
                 />
                 {errors.review && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.review}</span>}
               </div>
@@ -149,7 +149,7 @@ const ReviewForm = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-8 py-3 border border-[#A25A38] text-[#A25A38] rounded-full font-body text-xs uppercase tracking-widest font-semibold hover:bg-[#A25A38] hover:text-[#FAF9F6] transition-all duration-500 focus:outline-none disabled:opacity-50 cursor-none"
+                  className="px-8 py-3 border border-[#243C2F] text-[#243C2F] rounded-full font-body text-xs uppercase tracking-widest font-semibold hover:bg-[#243C2F] hover:text-[#FDFBF7] transition-all duration-500 focus:outline-none disabled:opacity-50 cursor-none"
                 >
                   {isSubmitting ? 'Sending Reflection...' : 'Submit Reflection'}
                 </button>
@@ -162,16 +162,16 @@ const ReviewForm = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="py-6 text-left space-y-4"
             >
-              <h5 className="font-heading text-2xl font-light text-[#1C2A20]">
+              <h5 className="font-heading text-2xl font-light text-[#1E221F]">
                 Reflection submitted.
               </h5>
-              <p className="font-body text-sm text-[#7E8B82] leading-relaxed font-light">
+              <p className="font-body text-sm text-[#79857B] leading-relaxed font-light">
                 Thank you for sharing your experience. Your reflection has been forwarded to our practice email. We review all feedback to maintain quality and update our customer reviews section.
               </p>
               <div className="pt-2">
                 <button
                   onClick={handleReset}
-                  className="px-6 py-2 border border-[#1C2A20]/20 text-[#7E8B82] hover:border-[#1C2A20] hover:text-[#1C2A20] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all cursor-none"
+                  className="px-6 py-2 border border-[#243C2F]/20 text-[#79857B] hover:border-[#243C2F] hover:text-[#1E221F] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all cursor-none"
                 >
                   Submit Another
                 </button>

@@ -33,14 +33,14 @@ interface FAQItemProps {
 
 const FAQItem = ({ question, answer, isOpen, onToggle }: FAQItemProps) => {
   return (
-    <div className="border-b border-[#1C2A20]/10 py-6">
+    <div className="border-b border-[#243C2F]/10 py-6">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between text-left py-2 font-heading text-lg md:text-xl font-light text-[#1C2A20] hover:text-[#A25A38] transition-colors focus:outline-none cursor-none"
+        className="w-full flex items-center justify-between text-left py-2 font-heading text-lg md:text-xl font-light text-[#1E221F] hover:text-[#C3B091] transition-colors focus:outline-none cursor-none"
         aria-expanded={isOpen}
       >
         <span>{question}</span>
-        <span className="ml-4 text-xs font-light text-[#A25A38]">
+        <span className="ml-4 text-xs font-light text-[#C3B091]">
           {isOpen ? '✦ Close' : '✦ Open'}
         </span>
       </button>
@@ -54,7 +54,7 @@ const FAQItem = ({ question, answer, isOpen, onToggle }: FAQItemProps) => {
             transition={{ duration: 0.4, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <p className="font-body text-xs md:text-sm text-[#7E8B82] leading-relaxed pt-4 pb-2 pr-12 font-light">
+            <p className="font-body text-xs md:text-sm text-[#79857B] leading-relaxed pt-4 pb-2 pr-12 font-light">
               {answer}
             </p>
           </motion.div>
@@ -72,22 +72,22 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="py-32 bg-[#F2EEE5] relative z-10 border-b border-[#1C2A20]/10">
+    <section id="faq" className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
       <div className="max-w-4xl mx-auto px-6 md:px-12">
         
         {/* Header */}
         <div className="text-center mb-20">
-          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#7E8B82] font-semibold block mb-4">
+          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
             Inquiries
           </span>
-          <h2 className="font-heading text-4xl font-light text-[#1C2A20]">
+          <h2 className="font-heading text-4xl font-light text-[#1E221F]">
             Frequently Asked Questions
           </h2>
-          <div className="w-12 h-[1px] bg-[#A25A38] mx-auto mt-6" />
+          <div className="w-12 h-[1px] bg-[#C3B091] mx-auto mt-6" />
         </div>
 
         {/* Accordion Wrapper */}
-        <div className="border-t border-[#1C2A20]/10">
+        <div className="border-t border-[#243C2F]/10">
           {faqData.map((item, idx) => (
             <FAQItem
               key={idx}

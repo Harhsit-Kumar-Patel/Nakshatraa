@@ -2,30 +2,30 @@ import { motion } from 'framer-motion';
 
 const stories = [
   {
-    title: 'Relational Transitions',
-    context: 'When connections evolve or fray.',
-    desc: 'Whether navigating the initial stages of alignment or processing a shift in an existing bond, we help you step back, observe the communication patterns, and understand the undercurrents shaping your relational dynamics.'
+    title: 'Career Confusion',
+    context: 'When your professional alignment shifts.',
+    desc: 'Standing at a vocational crossroads can feel isolating. Rather than making arbitrary predictions, we analyze your core strengths and planetary timing cycles to identify windows of opportunity, helping you pivot with structured clarity.'
   },
   {
-    title: 'Professional Direction',
-    context: 'When career paths lose their definition.',
-    desc: 'Confusion in career timing or job changes is common. We analyze your inherent capabilities and planetary cycles to map out windows of opportunities, helping you choose the direction aligned with your core.'
+    title: 'Relationship Challenges',
+    context: 'When communication is obscured by noise.',
+    desc: 'Relational friction often stems from unaligned natural communication cycles. Our sessions isolate these tension points, helping you step back, gain perspective, and rebuild structural harmony with mutual understanding.'
   },
   {
-    title: 'Marital Decisions',
-    context: 'When two life paths merge.',
-    desc: 'Entering marriage involves balancing individual values, family expectations, and future visions. Our consultations examine structural compatibility factors to ensure you make this choice with absolute clarity.'
+    title: 'Marriage Transitions',
+    context: 'Merging two distinct life journeys.',
+    desc: 'Entering a lifelong partnership brings deep family expectations and shared futures. We examine baseline relational calculations to map out compatibility values, preparing you to commit with clear assurance.'
   },
   {
-    title: 'Confronting Doubt',
-    context: 'When clarity is obscured by noise.',
-    desc: 'Periods of transition often bring temporary self-doubt and hesitation. Through focused conversation, we help isolate external pressures from your inner truth, restoring balance and decisive focus.'
+    title: 'Purpose & Self-Doubt',
+    context: 'Realigning when direction feels obscured.',
+    desc: 'Times of confusion are natural seasons of rest before growth. We translate complex celestial timings into practical actions, helping you clear self-doubt and refocus your energy on what truly matters.'
   }
 ];
 
 const Crossroads = () => {
   return (
-    <section id="philosophy" className="py-32 bg-[#F2EEE5] relative z-10 border-b border-[#1C2A20]/10">
+    <section id="philosophy" className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
       
       {/* Background Soft Plaster Glow */}
       <div className="absolute top-1/3 left-0 w-80 h-80 bg-white/40 rounded-full blur-[100px] pointer-events-none" />
@@ -35,16 +35,16 @@ const Crossroads = () => {
         {/* Intro Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start mb-28">
           <div className="lg:col-span-6 text-left">
-            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#7E8B82] font-semibold block mb-4">
+            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
               Context
             </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1C2A20] leading-tight">
-              Life is full of crossroads.
+            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1E221F] leading-tight">
+              Life isn't always predictable.
             </h2>
           </div>
           <div className="lg:col-span-6 text-left pt-2 lg:pt-8">
-            <p className="font-body text-base text-[#7E8B82] leading-relaxed font-light">
-              We do not seek to predict the future or lock you into a predetermined fate. Our goal is to provide a calm, objective space to discuss transitions when path-making decisions demand deeper reflection.
+            <p className="font-body text-base text-[#79857B] leading-relaxed font-light">
+              We do not offer fortune-telling or quick fixes. Nakshatraa exists to provide a calm, objective space to discuss life transits when major decisions require deeper perspective.
             </p>
           </div>
         </div>
@@ -68,22 +68,22 @@ const Crossroads = () => {
                 <div className={`lg:col-span-5 text-left ${
                   isEven ? 'lg:order-1' : 'lg:order-2 lg:col-start-8'
                 }`}>
-                  <span className="font-heading text-5xl md:text-6xl text-[#1C2A20]/10 select-none font-light block mb-2">
+                  <span className="font-heading text-5xl md:text-6xl text-[#243C2F]/10 select-none font-light block mb-2">
                     0{idx + 1}
                   </span>
-                  <h3 className="font-heading text-2xl md:text-3xl font-light text-[#1C2A20] mb-3">
+                  <h3 className="font-heading text-2xl md:text-3xl font-light text-[#1E221F] mb-3">
                     {story.title}
                   </h3>
-                  <p className="font-body text-xs uppercase tracking-widest text-[#A25A38] font-semibold mb-6">
+                  <p className="font-body text-xs uppercase tracking-widest text-[#C3B091] font-semibold mb-6">
                     {story.context}
                   </p>
-                  <div className="w-12 h-[1px] bg-[#1C2A20]/20 mb-6" />
+                  <div className="w-12 h-[1px] bg-[#243C2F]/20 mb-6" />
                 </div>
 
                 <div className={`lg:col-span-6 text-left ${
                   isEven ? 'lg:order-2 lg:col-start-7' : 'lg:order-1 lg:col-start-1'
                 }`}>
-                  <p className="font-body text-sm md:text-base text-[#7E8B82] leading-relaxed font-light">
+                  <p className="font-body text-sm md:text-base text-[#79857B] leading-relaxed font-light">
                     {story.desc}
                   </p>
                 </div>

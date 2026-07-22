@@ -10,11 +10,11 @@ const methods = [
 const consultationTypes = [
   'Life Consultation',
   'Relationship Guidance',
-  'Marriage Consultation',
+  'Marriage Guidance',
   'Career Direction',
   'Family Guidance',
-  'Personal Growth Sessions',
-  'Astrology Insights'
+  'Personal Growth',
+  'Traditional Insight Sessions'
 ];
 
 interface BookingFormProps {
@@ -57,7 +57,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Check if current consultation type is relational
-  const isRelational = formData.type === 'Relationship Guidance' || formData.type === 'Marriage Consultation';
+  const isRelational = formData.type === 'Relationship Guidance' || formData.type === 'Marriage Guidance';
 
   const validate = () => {
     const tempErrors: Record<string, string> = {};
@@ -160,19 +160,19 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
   };
 
   return (
-    <div className={`relative ${isModal ? '' : 'py-32 bg-[#F2EEE5] border-b border-[#1C2A20]/10'}`} id="booking">
+    <div className={`relative ${isModal ? '' : 'py-32 bg-[#FDFBF7] border-b border-[#243C2F]/10'}`} id="booking">
       <div className={isModal ? 'w-full' : 'max-w-3xl mx-auto px-6 md:px-12 text-left'}>
         
         {!isModal && (
           <div className="text-left mb-20 max-w-xl">
-            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#7E8B82] font-semibold block mb-4">
+            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
               Consultation
             </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1C2A20] leading-tight">
+            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1E221F] leading-tight">
               Request a session.
             </h2>
-            <div className="w-12 h-[1px] bg-[#A25A38] mt-6 mb-8" />
-            <p className="font-body text-sm text-[#7E8B82] leading-relaxed font-light">
+            <div className="w-12 h-[1px] bg-[#C3B091] mt-6 mb-8" />
+            <p className="font-body text-sm text-[#79857B] leading-relaxed font-light">
               Complete the form below to propose a consultation. We will reach back to confirm your session timing and coordinator.
             </p>
           </div>
@@ -190,12 +190,12 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
               
               {/* SECTION: Contact Details */}
               <div className="space-y-8">
-                <h4 className="font-heading text-xl text-[#1C2A20] font-light border-b border-[#1C2A20]/10 pb-2">
+                <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
                   1. Contact Information
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   <div className="flex flex-col">
-                    <label htmlFor="name" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                    <label htmlFor="name" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Name *
                     </label>
                     <input
@@ -207,13 +207,13 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         if (errors.name) setErrors({ ...errors, name: '' });
                       }}
                       placeholder="Your name"
-                      className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20]"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                     />
                     {errors.name && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.name}</span>}
                   </div>
 
                   <div className="flex flex-col">
-                    <label htmlFor="contact" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                    <label htmlFor="contact" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Email Address *
                     </label>
                     <input
@@ -225,7 +225,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         if (errors.contact) setErrors({ ...errors, contact: '' });
                       }}
                       placeholder="you@email.com"
-                      className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20]"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                     />
                     {errors.contact && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.contact}</span>}
                   </div>
@@ -234,12 +234,12 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
 
               {/* SECTION: Consultation Details */}
               <div className="space-y-8">
-                <h4 className="font-heading text-xl text-[#1C2A20] font-light border-b border-[#1C2A20]/10 pb-2">
+                <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
                   2. Consultation Preferences
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   <div className="flex flex-col">
-                    <label htmlFor="type" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                    <label htmlFor="type" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Consultation Type *
                     </label>
                     <select
@@ -249,18 +249,18 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         setFormData({ ...formData, type: e.target.value });
                         if (errors.type) setErrors({ ...errors, type: '' });
                       }}
-                      className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors text-[#1C2A20]"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
                     >
-                      <option value="" disabled className="bg-[#F2EEE5]">Select experience type</option>
+                      <option value="" disabled className="bg-[#FDFBF7]">Select experience type</option>
                       {consultationTypes.map((type) => (
-                        <option key={type} value={type} className="bg-[#F2EEE5]">{type}</option>
+                        <option key={type} value={type} className="bg-[#FDFBF7]">{type}</option>
                       ))}
                     </select>
                     {errors.type && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.type}</span>}
                   </div>
 
                   <div className="flex flex-col">
-                    <label htmlFor="method" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                    <label htmlFor="method" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Method *
                     </label>
                     <select
@@ -270,11 +270,11 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         setFormData({ ...formData, method: e.target.value });
                         if (errors.method) setErrors({ ...errors, method: '' });
                       }}
-                      className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors text-[#1C2A20]"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
                     >
-                      <option value="" disabled className="bg-[#F2EEE5]">Select meet method</option>
+                      <option value="" disabled className="bg-[#FDFBF7]">Select meet method</option>
                       {methods.map((method) => (
-                        <option key={method.id} value={method.id} className="bg-[#F2EEE5]">{method.name}</option>
+                        <option key={method.id} value={method.id} className="bg-[#FDFBF7]">{method.name}</option>
                       ))}
                     </select>
                     {errors.method && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.method}</span>}
@@ -283,7 +283,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   <div className="flex flex-col">
-                    <label htmlFor="date" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                    <label htmlFor="date" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Preferred Session Date *
                     </label>
                     <input
@@ -294,13 +294,13 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         setFormData({ ...formData, date: e.target.value });
                         if (errors.date) setErrors({ ...errors, date: '' });
                       }}
-                      className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors text-[#1C2A20]"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
                     />
                     {errors.date && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.date}</span>}
                   </div>
 
                   <div className="flex flex-col">
-                    <label htmlFor="time" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                    <label htmlFor="time" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Session Time Slot *
                     </label>
                     <select
@@ -310,12 +310,12 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         setFormData({ ...formData, time: e.target.value });
                         if (errors.time) setErrors({ ...errors, time: '' });
                       }}
-                      className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors text-[#1C2A20]"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
                     >
-                      <option value="" disabled className="bg-[#F2EEE5]">Select time slot</option>
-                      <option value="morning" className="bg-[#F2EEE5]">Morning (10:00 AM - 1:00 PM)</option>
-                      <option value="afternoon" className="bg-[#F2EEE5]">Afternoon (2:00 PM - 5:00 PM)</option>
-                      <option value="evening" className="bg-[#F2EEE5]">Evening (6:00 PM - 8:00 PM)</option>
+                      <option value="" disabled className="bg-[#FDFBF7]">Select time slot</option>
+                      <option value="morning" className="bg-[#FDFBF7]">Morning (10:00 AM - 1:00 PM)</option>
+                      <option value="afternoon" className="bg-[#FDFBF7]">Afternoon (2:00 PM - 5:00 PM)</option>
+                      <option value="evening" className="bg-[#FDFBF7]">Evening (6:00 PM - 8:00 PM)</option>
                     </select>
                     {errors.time && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.time}</span>}
                   </div>
@@ -324,14 +324,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
 
               {/* SECTION: Astrological Details */}
               <div className="space-y-8">
-                <h4 className="font-heading text-xl text-[#1C2A20] font-light border-b border-[#1C2A20]/10 pb-2">
+                <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
                   3. Birth Details (for Chart Calculation)
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                   
                   {/* DOB */}
                   <div className="flex flex-col">
-                    <label htmlFor="birthDate" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                    <label htmlFor="birthDate" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Date of Birth *
                     </label>
                     <input
@@ -342,14 +342,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         setFormData({ ...formData, birthDate: e.target.value });
                         if (errors.birthDate) setErrors({ ...errors, birthDate: '' });
                       }}
-                      className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors text-[#1C2A20]"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
                     />
                     {errors.birthDate && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthDate}</span>}
                   </div>
 
                   {/* TOB */}
                   <div className="flex flex-col">
-                    <label htmlFor="birthTime" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                    <label htmlFor="birthTime" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Exact Time of Birth *
                     </label>
                     <input
@@ -361,14 +361,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         setFormData({ ...formData, birthTime: e.target.value });
                         if (errors.birthTime) setErrors({ ...errors, birthTime: '' });
                       }}
-                      className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20]"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                     />
                     {errors.birthTime && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthTime}</span>}
                   </div>
 
                   {/* POB */}
                   <div className="flex flex-col col-span-1">
-                    <label htmlFor="birthPlace" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                    <label htmlFor="birthPlace" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Place of Birth *
                     </label>
                     <input
@@ -380,7 +380,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                         setFormData({ ...formData, birthPlace: e.target.value });
                         if (errors.birthPlace) setErrors({ ...errors, birthPlace: '' });
                       }}
-                      className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20]"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                     />
                     {errors.birthPlace && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthPlace}</span>}
                   </div>
@@ -398,14 +398,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                     transition={{ duration: 0.5, ease: 'easeInOut' }}
                     className="overflow-hidden space-y-8"
                   >
-                    <h4 className="font-heading text-xl text-[#A25A38] font-light border-b border-[#A25A38]/20 pb-2">
+                    <h4 className="font-heading text-xl text-[#C3B091] font-light border-b border-[#C3B091]/20 pb-2">
                       4. Partner's Birth Details (for Compatibility Assessment)
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
                       
                       {/* Partner Name */}
                       <div className="flex flex-col">
-                        <label htmlFor="partnerName" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                        <label htmlFor="partnerName" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                           Partner's Name *
                         </label>
                         <input
@@ -417,14 +417,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                             setFormData({ ...formData, partnerName: e.target.value });
                             if (errors.partnerName) setErrors({ ...errors, partnerName: '' });
                           }}
-                          className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20]"
+                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                         />
                         {errors.partnerName && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerName}</span>}
                       </div>
 
                       {/* Partner DOB */}
                       <div className="flex flex-col">
-                        <label htmlFor="partnerBirthDate" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                        <label htmlFor="partnerBirthDate" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                           Date of Birth *
                         </label>
                         <input
@@ -435,14 +435,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                             setFormData({ ...formData, partnerBirthDate: e.target.value });
                             if (errors.partnerBirthDate) setErrors({ ...errors, partnerBirthDate: '' });
                           }}
-                          className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors text-[#1C2A20]"
+                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
                         />
                         {errors.partnerBirthDate && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthDate}</span>}
                       </div>
 
                       {/* Partner TOB */}
                       <div className="flex flex-col">
-                        <label htmlFor="partnerBirthTime" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                        <label htmlFor="partnerBirthTime" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                           Birth Time *
                         </label>
                         <input
@@ -454,14 +454,14 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                             setFormData({ ...formData, partnerBirthTime: e.target.value });
                             if (errors.partnerBirthTime) setErrors({ ...errors, partnerBirthTime: '' });
                           }}
-                          className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20]"
+                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                         />
                         {errors.partnerBirthTime && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthTime}</span>}
                       </div>
 
                       {/* Partner POB */}
                       <div className="flex flex-col">
-                        <label htmlFor="partnerBirthPlace" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                        <label htmlFor="partnerBirthPlace" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                           Birth Place *
                         </label>
                         <input
@@ -473,7 +473,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                             setFormData({ ...formData, partnerBirthPlace: e.target.value });
                             if (errors.partnerBirthPlace) setErrors({ ...errors, partnerBirthPlace: '' });
                           }}
-                          className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20]"
+                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                         />
                         {errors.partnerBirthPlace && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthPlace}</span>}
                       </div>
@@ -485,7 +485,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
 
               {/* Message & Context */}
               <div className="flex flex-col">
-                <label htmlFor="message" className="font-body text-[10px] uppercase tracking-widest text-[#7E8B82] font-semibold mb-2">
+                <label htmlFor="message" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                   Additional Notes or Questions
                 </label>
                 <textarea
@@ -494,7 +494,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Share any specific context or questions you want addressed..."
                   rows={3}
-                  className="py-3 border-b border-[#1C2A20]/30 focus:border-[#1C2A20] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#7E8B82]/40 text-[#1C2A20] resize-none"
+                  className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F] resize-none"
                 />
               </div>
 
@@ -508,7 +508,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-10 py-3.5 border border-[#A25A38] text-[#A25A38] rounded-full font-body text-xs uppercase tracking-widest font-semibold hover:bg-[#A25A38] hover:text-[#FAF9F6] transition-all duration-500 focus:outline-none disabled:opacity-50 cursor-none"
+                  className="px-10 py-3.5 border border-[#243C2F] text-[#243C2F] rounded-full font-body text-xs uppercase tracking-widest font-semibold hover:bg-[#243C2F] hover:text-[#FDFBF7] transition-all duration-500 focus:outline-none disabled:opacity-50 cursor-none"
                 >
                   {isSubmitting ? 'Submitting Details...' : 'Submit Request'}
                 </button>
@@ -521,23 +521,23 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
               animate={{ opacity: 1, scale: 1 }}
               className="py-12 text-left space-y-6"
             >
-              <h3 className="font-heading text-3xl font-light text-[#1C2A20]">
+              <h3 className="font-heading text-3xl font-light text-[#1E221F]">
                 Session request received.
               </h3>
-              <p className="font-body text-sm text-[#7E8B82] leading-relaxed font-light max-w-lg">
+              <p className="font-body text-sm text-[#79857B] leading-relaxed font-light max-w-lg">
                 Thank you for sharing your alignment details. Your data has been securely forwarded. Our coordinator will review your chart timeline options and reach back within 24 hours to confirm.
               </p>
               <div className="flex space-x-6 pt-4">
                 <button
                   onClick={handleReset}
-                  className="px-6 py-2.5 border border-[#1C2A20]/20 text-[#7E8B82] hover:border-[#1C2A20] hover:text-[#1C2A20] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all cursor-none"
+                  className="px-6 py-2.5 border border-[#243C2F]/20 text-[#79857B] hover:border-[#243C2F] hover:text-[#1E221F] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all cursor-none"
                 >
                   New Booking
                 </button>
                 {isModal && onClose && (
                   <button
                     onClick={onClose}
-                    className="px-6 py-2.5 bg-[#1C2A20] text-[#F2EEE5] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all cursor-none"
+                    className="px-6 py-2.5 bg-[#243C2F] text-[#FDFBF7] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all cursor-none"
                   >
                     Close Window
                   </button>

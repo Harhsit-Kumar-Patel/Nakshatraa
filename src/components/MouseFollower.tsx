@@ -65,9 +65,9 @@ const MouseFollower = () => {
       animate={{
         width: isHovering ? 56 : 10,
         height: isHovering ? 56 : 10,
-        backgroundColor: isHovering ? 'rgba(162, 90, 56, 0.1)' : 'rgba(162, 90, 56, 0.85)',
-        borderColor: isHovering ? 'rgba(28, 42, 32, 0.6)' : 'transparent',
-        borderWidth: isHovering ? 1 : 0,
+        backgroundColor: isHovering ? 'rgba(36, 60, 47, 0.05)' : 'rgba(36, 60, 47, 0.85)',
+        borderColor: isHovering ? 'rgba(195, 176, 145, 0.8)' : 'transparent',
+        borderWidth: isHovering ? 1.5 : 0,
       }}
       transition={{ type: 'tween', ease: 'backOut', duration: 0.15 }}
       className="hidden md:block pointer-events-none z-[9999] rounded-full mix-blend-multiply"

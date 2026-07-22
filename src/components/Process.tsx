@@ -33,7 +33,7 @@ const Process = () => {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   return (
-    <section className="py-32 bg-[#F2EEE5] relative z-10 border-b border-[#1C2A20]/10">
+    <section className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
       
       {/* Background soft plaster glow */}
       <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-white/40 rounded-full blur-[100px] pointer-events-none" />
@@ -43,20 +43,20 @@ const Process = () => {
           
           {/* Left Column: Heading & Outline */}
           <div className="lg:col-span-5 text-left lg:sticky lg:top-36">
-            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#7E8B82] font-semibold block mb-4">
+            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
               Methodology
             </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1C2A20] leading-tight mb-8">
+            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1E221F] leading-tight mb-8">
               A structured approach to self-alignment.
             </h2>
-            <p className="font-body text-sm text-[#7E8B82] leading-relaxed font-light mb-6">
+            <p className="font-body text-sm text-[#79857B] leading-relaxed font-light mb-6">
               Our consultation is a mutual conversation. We translate celestial configurations into clear, logical steps to ensure you leave with balanced insights.
             </p>
-            <div className="w-12 h-[1px] bg-[#A25A38]" />
+            <div className="w-12 h-[1px] bg-[#C3B091]" />
           </div>
 
           {/* Right Column: Interactive Vertical Timeline */}
-          <div className="lg:col-span-7 text-left space-y-12 relative pl-8 border-l border-[#1C2A20]/15 ml-4">
+          <div className="lg:col-span-7 text-left space-y-12 relative pl-8 border-l border-[#243C2F]/15 ml-4">
             
             {steps.map((step, idx) => (
               <motion.div
@@ -66,22 +66,22 @@ const Process = () => {
                 className="relative group transition-all duration-300"
               >
                 {/* Connecting bullet point */}
-                <div className={`absolute -left-[38px] top-1.5 w-4 h-4 rounded-full border border-[#1C2A20] bg-[#F2EEE5] flex items-center justify-center transition-all duration-300 ${
-                  hoveredIdx === idx ? 'scale-125 bg-[#1C2A20]' : ''
+                <div className={`absolute -left-[38px] top-1.5 w-4 h-4 rounded-full border border-[#243C2F] bg-[#FDFBF7] flex items-center justify-center transition-all duration-300 ${
+                  hoveredIdx === idx ? 'scale-125 bg-[#243C2F]' : ''
                 }`}>
-                  <div className="w-1.5 h-1.5 bg-[#A25A38] rounded-full" />
+                  <div className="w-1.5 h-1.5 bg-[#C3B091] rounded-full" />
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-baseline space-x-4">
-                    <span className="font-heading text-3xl font-light text-[#A25A38]">
+                    <span className="font-heading text-3xl font-light text-[#C3B091]">
                       {step.num}
                     </span>
-                    <h3 className="font-heading text-xl md:text-2xl font-light text-[#1C2A20] group-hover:text-[#A25A38] transition-colors duration-300">
+                    <h3 className="font-heading text-xl md:text-2xl font-light text-[#1E221F] group-hover:text-[#C3B091] transition-colors duration-300">
                       {step.title}
                     </h3>
                   </div>
-                  <p className="font-body text-sm md:text-base text-[#7E8B82] leading-relaxed font-light max-w-xl">
+                  <p className="font-body text-sm md:text-base text-[#79857B] leading-relaxed font-light max-w-xl">
                     {step.desc}
                   </p>
                 </div>

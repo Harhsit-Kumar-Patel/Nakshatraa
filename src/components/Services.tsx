@@ -19,7 +19,7 @@ const experiences = [
   {
     id: 'marriage',
     num: '03',
-    title: 'Marriage Consultation',
+    title: 'Marriage Guidance',
     desc: 'Supportive compatibility reviews for couples planning to marry. We analyze structural parameters to establish mutual understanding.',
     details: 'We offer a thoughtful pre-marital compatibility assessment. We examine emotional resonance, financial values, longevity indices, and shared growth paths to build a firm foundation.'
   },
@@ -40,72 +40,76 @@ const experiences = [
   {
     id: 'growth',
     num: '06',
-    title: 'Personal Growth Sessions',
+    title: 'Personal Growth',
     desc: 'Dedicated coaching sessions to navigate periods of isolation, Saturn return transits, and internal transformation.',
     details: 'Transitions like Saturn Returns can feel isolating. We analyze these developmental phases to help you frame them as opportunities for maturity, grounding, and self-mastery.'
   },
   {
     id: 'astrology',
     num: '07',
-    title: 'Astrology Insights',
+    title: 'Traditional Insight Sessions',
     desc: 'Specific planetary study to answer focused questions on timing, planetary placement strengths, or transit advice.',
     details: 'A focused discussion on specific planetary alignments. We explain active transits, minor planetary dashas, and suggest reflective practices to bring balance to your daily lifestyle.'
   }
 ];
 
-const Services = () => {
+interface ServicesProps {
+  onBookService: (serviceName: string) => void;
+}
+
+const Services = ({ onBookService }: ServicesProps) => {
   const [activeIdx, setActiveIdx] = useState<number>(0);
 
   return (
-    <section id="experiences" className="py-32 bg-[#F2EEE5] relative z-10 border-b border-[#1C2A20]/10 overflow-hidden">
+    <section id="experiences" className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10 overflow-hidden">
       
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Header */}
         <div className="text-left mb-24 max-w-2xl">
-          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#7E8B82] font-semibold block mb-4">
+          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
             Experiences
           </span>
-          <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1C2A20] leading-tight">
+          <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1E221F] leading-tight">
             Consultations designed for clarity.
           </h2>
-          <div className="w-12 h-[1px] bg-[#1C2A20] mt-6" />
+          <div className="w-12 h-[1px] bg-[#243C2F] mt-6" />
         </div>
 
         {/* Gallery List Layout */}
-        <div className="max-w-4xl mx-auto border-t border-[#1C2A20]/10">
+        <div className="max-w-4xl mx-auto border-t border-[#243C2F]/10">
           {experiences.map((exp, idx) => {
             const isActive = activeIdx === idx;
             return (
               <div
                 key={exp.id}
                 onClick={() => setActiveIdx(idx)}
-                className="border-b border-[#1C2A20]/10 py-8 text-left transition-colors duration-300 cursor-none select-none"
+                className="border-b border-[#243C2F]/10 py-8 text-left transition-colors duration-300 cursor-none select-none"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-baseline space-x-8">
-                    {/* Active Terracotta Dot indicator */}
+                    {/* Active Muted Gold Dot indicator */}
                     <div className="w-4 flex items-center justify-center">
                       {isActive ? (
                         <motion.div
                           layoutId="activeDot"
-                          className="w-2 h-2 rounded-full bg-[#A25A38]"
+                          className="w-2 h-2 rounded-full bg-[#C3B091]"
                           transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                         />
                       ) : (
-                        <span className="text-[10px] text-[#7E8B82]/40 font-semibold">{exp.num}</span>
+                        <span className="text-[10px] text-[#79857B]/40 font-semibold">{exp.num}</span>
                       )}
                     </div>
                     
                     <h3 className={`font-heading text-2xl md:text-3xl font-light transition-colors duration-300 ${
-                      isActive ? 'text-[#1C2A20] font-normal' : 'text-[#1C2A20]/50'
+                      isActive ? 'text-[#1E221F] font-normal' : 'text-[#1E221F]/50'
                     }`}>
                       {exp.title}
                     </h3>
                   </div>
 
                   <span className={`font-body text-[10px] uppercase tracking-widest transition-colors duration-300 ${
-                    isActive ? 'text-[#A25A38] font-bold' : 'text-[#7E8B82]/50'
+                    isActive ? 'text-[#C3B091] font-bold' : 'text-[#79857B]/50'
                   }`}>
                     {isActive ? 'Active' : 'Details'}
                   </span>
@@ -121,13 +125,26 @@ const Services = () => {
                       transition={{ duration: 0.4, ease: 'easeInOut' }}
                       className="overflow-hidden"
                     >
-                      <div className="pl-12 pr-6 pt-6 pb-2 space-y-4 max-w-2xl">
-                        <p className="font-body text-sm md:text-base text-[#7E8B82] leading-relaxed font-light">
+                      <div className="pl-12 pr-6 pt-6 pb-2 space-y-6 max-w-2xl">
+                        <p className="font-body text-sm md:text-base text-[#79857B] leading-relaxed font-light">
                           {exp.desc}
                         </p>
-                        <p className="font-body text-xs text-[#1C2A20]/75 italic leading-relaxed border-t border-[#1C2A20]/5 pt-4 font-light">
+                        <p className="font-body text-xs text-[#1E221F]/75 italic leading-relaxed border-t border-[#243C2F]/5 pt-4 font-light">
                           {exp.details}
                         </p>
+
+                        {/* Booking CTA Button Inside Service Drawer */}
+                        <div className="pt-4 text-left">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevents closing the drawer
+                              onBookService(exp.title);
+                            }}
+                            className="px-6 py-2.5 border border-[#243C2F] text-[#243C2F] hover:bg-[#243C2F] hover:text-[#FDFBF7] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all duration-500 cursor-none"
+                          >
+                            Request this Consultation
+                          </button>
+                        </div>
                       </div>
                     </motion.div>
                   )}
