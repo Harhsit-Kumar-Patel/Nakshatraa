@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1C2A20; /* Deep Forest Green */
+  --color-primary-hover: #121D16;
+  --color-secondary: #FAF9F6; /* Warm Chalk/Alabaster */
+  --color-secondary-hover: #F2EEE5;
+  --color-bg-custom: #F2EEE5; /* Natural Plaster/Warm Sand */
+  --color-text-custom: #1C2A20;
+  --color-text-muted: #7E8B82; /* Stone Grey */
+  --color-accent-terracotta: #A25A38; /* Earthy Terracotta/Rust */
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-body);
+    color: var(--color-text-custom);
+    background-color: var(--color-bg-custom);
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Paper Plaster Texture Overlay */
+.paper-grain {
+  position: relative;
+}
+
+.paper-grain::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Custom premium forest-on-plaster scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F2EEE5;
+}
+::-webkit-scrollbar-thumb {
+  background: #1C2A20;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A25A38;
+}
+
+/* Custom Cursor styling support */
+.custom-cursor-hover {
+  cursor: none;
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, select, input, textarea, [role="button"] {
+    cursor: none;
+  }
+}
+
+/* Editorial layout styles */
+.editorial-lead {
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+}
+
+.editorial-title {
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
