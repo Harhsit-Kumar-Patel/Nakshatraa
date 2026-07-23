@@ -114,7 +114,7 @@ const ReviewForm = () => {
                     id="review-role"
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                    placeholder="e.g., Designer, Mumbai"
+                    placeholder="e.g., Designer"
                     className="py-2.5 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                   />
                 </div>

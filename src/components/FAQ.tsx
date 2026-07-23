@@ -16,7 +16,7 @@ const faqData = [
   },
   {
     question: 'Can I book online, or are sessions only offline?',
-    answer: 'All sessions are conducted online via Google Meet or WhatsApp call, allowing you to connect privately from anywhere. We also offer face-to-face sessions at our Bandra, Mumbai office by appointment.'
+    answer: 'All sessions are conducted fully online via Google Meet or WhatsApp call, allowing you to connect privately from anywhere in the world.'
   },
   {
     question: 'Do you offer follow-up consultations?',
