@@ -27,6 +27,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
   const [formData, setFormData] = useState({
     name: '',
     contact: '',
+    phone: '',
     type: defaultService || '',
     method: '',
     date: '',
@@ -69,6 +70,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
     } else if (!formData.contact.includes('@')) {
       tempErrors.contact = 'Provide a valid email address';
     }
+    if (!formData.phone.trim()) tempErrors.phone = 'Please provide your mobile number';
     if (!formData.type) tempErrors.type = 'Select a consultation type';
     if (!formData.method) tempErrors.method = 'Select your preferred method';
     if (!formData.date) tempErrors.date = 'Select preferred session date';
@@ -109,6 +111,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
           access_key: '27d94ba6-8596-4c68-a4f8-c343733c8099',
           name: formData.name,
           contact: formData.contact,
+          phone: formData.phone,
           type: formData.type,
           method: formData.method,
           date: formData.date,
@@ -149,6 +152,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
     setFormData({
       name: '',
       contact: '',
+      phone: '',
       type: '',
       method: '',
       date: '',
@@ -201,7 +205,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                 <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
                   1. Contact Information
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                   <div className="flex flex-col">
                     <label htmlFor="name" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Name *
@@ -236,6 +240,24 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                       className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
                     />
                     {errors.contact && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.contact}</span>}
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label htmlFor="phone" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
+                      Mobile / WhatsApp *
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      value={formData.phone}
+                      onChange={(e) => {
+                        setFormData({ ...formData, phone: e.target.value });
+                        if (errors.phone) setErrors({ ...errors, phone: '' });
+                      }}
+                      placeholder="+91 XXXXX XXXXX"
+                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
+                    />
+                    {errors.phone && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.phone}</span>}
                   </div>
                 </div>
               </div>
