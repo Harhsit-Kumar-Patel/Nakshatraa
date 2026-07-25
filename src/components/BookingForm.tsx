@@ -599,7 +599,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                 Session request received.
               </h3>
               <p className="font-body text-sm text-[#79857B] leading-relaxed font-light max-w-lg">
-                Thank you for sharing your alignment details. Your data has been securely forwarded. Our coordinator will review your chart timeline options and reach back within 24 hours to confirm.
+                Thank you for sharing your alignment details. Your data has been securely forwarded. Our coordinator will review your chart timeline options and reach back within 24 to 48 hours to confirm.
               </p>
               <div className="flex space-x-6 pt-4">
                 <button
