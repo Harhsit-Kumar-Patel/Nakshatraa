@@ -6,6 +6,21 @@ const testimonials = [
     quote: "I found the reading to be very genuine and insightful. It really resonated with me, and many of the points felt accurate and meaningful. Thank you for such an honest and thoughtful reading.",
     author: "Khushi Wadhwani",
     role: "Student, Raipur, Chattisgarh, India"
+  },
+  {
+    quote: "I had a really great experience with this astrology reading. The astrologer listened patiently to all my problems, and gave simple, honest, and helpful advice. Everything was explained in a clear way and I left the session feeling much more positive. I would certainly recommend their services to anyone seeking true guidance.",
+    author: "Sumant Krishna Singh",
+    role: "Prayagraj"
+  },
+  {
+    quote: "I found the insights provided to be deeply accurate and instrumental in helping me navigate the ups and downs of my journey. I am truly grateful for this platform, which offered valuable clarity and guided my perspective in the right direction.",
+    author: "Kirti Agrawal",
+    role: "Student, Ghazipur"
+  },
+  {
+    quote: "Extremely knowledgeable and precise. Gave me clear insights in to my personal life.",
+    author: "Divya Singh",
+    role: "Lucknow"
   }
 ];
 
