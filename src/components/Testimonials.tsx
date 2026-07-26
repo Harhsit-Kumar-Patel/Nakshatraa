@@ -26,6 +26,18 @@ const testimonials = [
     quote: "Extremely knowledgeable and precise. Gave me clear insights in to my personal life.",
     author: "Divya Singh",
     role: "Lucknow"
+  },
+  {
+    id: 5,
+    quote: "Very accurate predictions and timely solution,very patiently listens to all our problems and also explains the solutions in detail 🙏",
+    author: "Sneha Singh",
+    role: "Noida"
+  },
+  {
+    id: 6,
+    quote: "I am very happy with the consultation. The guidance was clear, easy to understand, and gave me a better way to look at my situation. It was a very positive experience, and I would happily recommend this service to anyone looking for honest and helpful astrology advice.",
+    author: "Tripti Singh",
+    role: "Mirzapur"
   }
 ];
 
@@ -57,7 +69,7 @@ const Testimonials = () => {
         </div>
 
         {/* Asymmetrical Grid of Review Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((item) => (
             <motion.div
               key={item.id}
