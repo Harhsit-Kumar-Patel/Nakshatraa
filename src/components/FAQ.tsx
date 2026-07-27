@@ -72,11 +72,11 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
+    <section id="faq" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
       <div className="max-w-4xl mx-auto px-6 md:px-12">
         
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-16">
           <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
             Inquiries
           </span>

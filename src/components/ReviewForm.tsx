@@ -63,10 +63,10 @@ const ReviewForm = () => {
   };
 
   return (
-    <section className="py-24 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
+    <section className="py-16 md:py-20 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
       <div className="max-w-2xl mx-auto px-6 md:px-12">
         
-        <div className="text-left mb-12">
+        <div className="text-left mb-8 md:mb-12">
           <h4 className="font-heading text-3xl font-light text-[#1E221F] mb-2">
             Share your experience
           </h4>

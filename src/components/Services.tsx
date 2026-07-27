@@ -61,12 +61,12 @@ const Services = ({ onBookService }: ServicesProps) => {
   const [activeIdx, setActiveIdx] = useState<number>(0);
 
   return (
-    <section id="experiences" className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10 overflow-hidden">
+    <section id="experiences" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10 overflow-hidden">
       
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Header */}
-        <div className="text-left mb-24 max-w-2xl">
+        <div className="text-left mb-12 md:mb-16 max-w-2xl">
           <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
             Experiences
           </span>
@@ -125,7 +125,7 @@ const Services = ({ onBookService }: ServicesProps) => {
                       transition={{ duration: 0.4, ease: 'easeInOut' }}
                       className="overflow-hidden"
                     >
-                      <div className="pl-12 pr-6 pt-6 pb-2 space-y-6 max-w-2xl">
+                      <div className="pl-6 md:pl-12 pr-6 pt-6 pb-2 space-y-6 max-w-2xl">
                         <p className="font-body text-sm md:text-base text-[#79857B] leading-relaxed font-light">
                           {exp.desc}
                         </p>

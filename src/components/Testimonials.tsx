@@ -51,7 +51,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10 overflow-hidden">
+    <section id="testimonials" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10 overflow-hidden">
       
       {/* Decorative lines */}
       <div className="absolute top-0 inset-x-12 h-[1px] bg-[#243C2F]/10" />

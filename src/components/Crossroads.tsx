@@ -25,7 +25,7 @@ const stories = [
 
 const Crossroads = () => {
   return (
-    <section id="philosophy" className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
+    <section id="philosophy" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
       
       {/* Background Soft Plaster Glow */}
       <div className="absolute top-1/3 left-0 w-80 h-80 bg-white/40 rounded-full blur-[100px] pointer-events-none" />
@@ -33,7 +33,7 @@ const Crossroads = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Intro Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start mb-28">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start mb-16 md:mb-24">
           <div className="lg:col-span-6 text-left">
             <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
               Context
@@ -50,7 +50,7 @@ const Crossroads = () => {
         </div>
 
         {/* Asymmetrical Story Grid */}
-        <div className="space-y-36">
+        <div className="space-y-20 md:space-y-32">
           {stories.map((story, idx) => {
             const isEven = idx % 2 === 0;
             return (

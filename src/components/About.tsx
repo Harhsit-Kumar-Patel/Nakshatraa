@@ -1,6 +1,6 @@
 const About = () => {
   return (
-    <section className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
+    <section className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
       
       {/* Subtle background plaster glow */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-white/40 rounded-full blur-[100px] pointer-events-none" />

@@ -1,6 +1,6 @@
 const Contact = () => {
   return (
-    <section id="contact" className="py-32 bg-[#FDFBF7] relative z-10">
+    <section id="contact" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           

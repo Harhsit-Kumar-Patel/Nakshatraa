@@ -93,36 +93,36 @@ const Navbar = ({ onOpenBooking }: NavbarProps) => {
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
-      </header>
 
-      {/* Mobile Drawer Overlay */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-x-0 top-[64px] bg-[#FDFBF7] border-b border-[#243C2F]/20 shadow-xl z-30 md:hidden p-8 paper-grain">
-          <div className="flex flex-col space-y-6 text-left">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className="font-body text-sm font-semibold uppercase tracking-widest text-[#1E221F] hover:text-[#243C2F] transition-colors py-1"
-              >
-                {link.name}
-              </a>
-            ))}
-            <div className="pt-4 border-t border-[#243C2F]/10">
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onOpenBooking();
-                }}
-                className="w-full text-center px-6 py-3 border border-[#243C2F] text-[#243C2F] rounded-full font-body text-xs uppercase tracking-widest font-semibold hover:bg-[#243C2F] hover:text-[#FDFBF7] transition-all cursor-none"
-              >
-                Book Consultation
-              </button>
+        {/* Mobile Drawer Overlay inside header */}
+        {isMobileMenuOpen && (
+          <div className="absolute inset-x-0 top-full bg-[#FDFBF7] border-b border-[#243C2F]/20 shadow-xl z-30 md:hidden p-8 paper-grain">
+            <div className="flex flex-col space-y-6 text-left">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  className="font-body text-sm font-semibold uppercase tracking-widest text-[#1E221F] hover:text-[#243C2F] transition-colors py-1"
+                >
+                  {link.name}
+                </a>
+              ))}
+              <div className="pt-4 border-t border-[#243C2F]/10">
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onOpenBooking();
+                  }}
+                  className="w-full text-center px-6 py-3 border border-[#243C2F] text-[#243C2F] rounded-full font-body text-xs uppercase tracking-widest font-semibold hover:bg-[#243C2F] hover:text-[#FDFBF7] transition-all cursor-none"
+                >
+                  Book Consultation
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </header>
     </>
   );
 };

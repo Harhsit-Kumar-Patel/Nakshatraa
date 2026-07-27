@@ -33,7 +33,7 @@ const Process = () => {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   return (
-    <section className="py-32 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
+    <section className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
       
       {/* Background soft plaster glow */}
       <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-white/40 rounded-full blur-[100px] pointer-events-none" />

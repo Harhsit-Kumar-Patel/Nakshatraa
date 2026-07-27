@@ -172,11 +172,11 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
   };
 
   return (
-    <div className={`relative ${isModal ? '' : 'py-32 bg-[#FDFBF7] border-b border-[#243C2F]/10'}`} id="booking">
+    <div className={`relative ${isModal ? '' : 'py-20 md:py-28 bg-[#FDFBF7] border-b border-[#243C2F]/10'}`} id="booking">
       <div className={isModal ? 'w-full' : 'max-w-3xl mx-auto px-6 md:px-12 text-left'}>
         
         {!isModal && (
-          <div className="text-left mb-20 max-w-xl">
+          <div className="text-left mb-12 md:mb-16 max-w-xl">
             <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
               Consultation
             </span>
@@ -205,7 +205,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                 <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
                   1. Contact Information
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
                   <div className="flex flex-col">
                     <label htmlFor="name" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Name *
@@ -267,7 +267,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                 <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
                   2. Consultation Preferences
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                   <div className="flex flex-col">
                     <label htmlFor="type" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Consultation Type *
@@ -311,7 +311,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                   <div className="flex flex-col">
                     <label htmlFor="date" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                       Preferred Session Date *
@@ -357,7 +357,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                 <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
                   3. Birth Details (for Chart Calculation)
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-10">
                   
                   {/* DOB */}
                   <div className="flex flex-col">
@@ -453,7 +453,7 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
                     <h4 className="font-heading text-xl text-[#C3B091] font-light border-b border-[#C3B091]/20 pb-2">
                       4. Partner's Birth Details (for Compatibility Assessment)
                     </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
                       
                       {/* Partner Name */}
                       <div className="flex flex-col">
