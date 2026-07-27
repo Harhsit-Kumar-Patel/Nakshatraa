@@ -2,7 +2,28 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
-const testimonials = [
+const featuredTestimonials = [
+  {
+    id: 11,
+    quote: "I had a wonderful consultation and was truly blown away by the depth and accuracy of the reading. Without asking many details upfront, my current life situation were pinpointed and I got profound clarity on my career and personal life. The given remedies and suggestions are simple, logical, and very practical to follow, rather than being confusing or fear-driven. I left the session feeling calm, positive, and deeply guided. Highly recommended to anyone seeking honest and meaningful direction!",
+    author: "Dr. Neeraj Singh",
+    role: "Varanasi"
+  },
+  {
+    id: 9,
+    quote: "I recently consulted this astrologer regarding my horoscope, and I was genuinely impressed by the experience. The analysis was detailed, thoughtful, and based on a thorough understanding of my birth chart. She explained the planetary influences in a clear and practical manner, making it easy to understand both current challenges and future opportunities. What stood out most was the honest and balanced guidance. Rather than making unrealistic promises, the advice was realistic, insightful, and focused on actionable remedies and personal growth.",
+    author: "Shivangi Singh",
+    role: "Delhi"
+  },
+  {
+    id: 8,
+    quote: "Consulting with Nakshatra was a truly eye-opening experience. What impressed me most was how deeply they understood my chart and how seamlessly they translated complex astrological concepts into plain, actionable advice. Their predictions were accurate, and their logical approach gave me immense confidence. I will definitely be returning for future guidance.",
+    author: "Shreya Patel",
+    role: "Teacher, Ghazipur"
+  }
+];
+
+const marqueeTestimonials = [
   {
     id: 1,
     quote: "I found the reading to be very genuine and insightful. It really resonated with me, and many of the points felt accurate and meaningful. Thank you for such an honest and thoughtful reading.",
@@ -11,13 +32,13 @@ const testimonials = [
   },
   {
     id: 2,
-    quote: "I had a really great experience with this astrology reading. The astrologer listened patiently to all my problems, and gave simple, honest, and helpful advice. Everything was explained in a clear way and I left the session feeling much more positive. I would certainly recommend their services to anyone seeking true guidance.",
+    quote: "I had a really great experience with this astrology reading. The astrologer listened patiently to all my problems, and gave simple, honest, and helpful advice. Everything was explained in a clear way and I left the session feeling much more positive.",
     author: "Sumant Krishna Singh",
     role: "Prayagraj"
   },
   {
     id: 3,
-    quote: "I found the insights provided to be deeply accurate and instrumental in helping me navigate the ups and downs of my journey. I am truly grateful for this platform, which offered valuable clarity and guided my perspective in the right direction.",
+    quote: "I found the insights provided to be deeply accurate and instrumental in helping me navigate the ups and downs of my journey. I am truly grateful for this platform.",
     author: "Kirti Agrawal",
     role: "Student, Ghazipur"
   },
@@ -35,60 +56,50 @@ const testimonials = [
   },
   {
     id: 6,
-    quote: "I am very happy with the consultation. The guidance was clear, easy to understand, and gave me a better way to look at my situation. It was a very positive experience, and I would happily recommend this service to anyone looking for honest and helpful astrology advice.",
+    quote: "I am very happy with the consultation. The guidance was clear, easy to understand, and gave me a better way to look at my situation. It was a very positive experience.",
     author: "Tripti Singh",
     role: "Mirzapur"
   },
   {
     id: 7,
-    quote: "Your knowledge of planets and constellations is truly amazing. Heartfelt congratulations to you for that. My dear friend, besides being a wonderful teacher for children, you are also an excellent expert in astrology. Thank you for your guidance and dedication.",
+    quote: "Your knowledge of planets and constellations is truly amazing. Heartfelt congratulations to you for that. Thank you for your guidance and dedication.",
     author: "Divya Mishra",
     role: "Ghazipur"
   },
   {
-    id: 8,
-    quote: "Consulting with Nakshatra was a truly eye-opening experience. What impressed me most was how deeply they understood my chart and how seamlessly they translated complex astrological concepts into plain, actionable advice. Their predictions were accurate, and their logical approach gave me immense confidence. I will definitely be returning for future guidance.",
-    author: "Shreya Patel",
-    role: "Teacher, Ghazipur"
-  },
-  {
-    id: 9,
-    quote: "I recently consulted this astrologer regarding my horoscope, and I was genuinely impressed by the experience. The analysis was detailed, thoughtful, and based on a thorough understanding of my birth chart. She explained the planetary influences in a clear and practical manner, making it easy to understand both current challenges and future opportunities. What stood out most was the honest and balanced guidance. Rather than making unrealistic promises, the advice was realistic, insightful, and focused on actionable remedies and personal growth. Many of the observations about my personality, life events, and ongoing situations were remarkably accurate. I appreciate the patience with which all my questions were answered and the time taken to explain the reasoning behind the predictions and recommendations. Overall, it was a valuable and enlightening consultation, and I would recommend her to anyone seeking genuine astrological guidance.",
-    author: "Shivangi Singh",
-    role: "Delhi"
-  },
-  {
     id: 10,
-    quote: "I had a wonderful experience with this consultation. The session was friendly, patient, and explained everything in a simple and easy-to-understand way. The advice was honest, helpful, and gave me a lot of confidence. I highly recommend this service.",
+    quote: "I had a wonderful experience with this consultation. The session was friendly, patient, and explained everything in a simple and easy-to-understand way. The advice was honest, helpful, and gave me a lot of confidence.",
     author: "Shalini Singh",
-    role: "Varanasi"
-  },
-  {
-    id: 11,
-    quote: "I had a wonderful consultation and was truly blown away by the depth and accuracy of the reading. Without asking many details upfront, my current life situation were pinpointed and I got profound clarity on my career and personal life. The given remedies and suggestions are simple, logical, and very practical to follow, rather than being confusing or fear-driven. I left the session feeling calm, positive, and deeply guided. Highly recommended to anyone seeking honest and meaningful direction!",
-    author: "Dr. Neeraj Singh",
     role: "Varanasi"
   }
 ];
 
-const Testimonials = () => {
-  const [selectedReview, setSelectedReview] = useState<typeof testimonials[0] | null>(null);
+// Combine all for easy modal lookup
+const allTestimonials = [...featuredTestimonials, ...marqueeTestimonials];
 
-  // Helper to truncate text for card previews
-  const truncateText = (text: string, maxLength: number = 110) => {
+const Testimonials = () => {
+  const [selectedReview, setSelectedReview] = useState<typeof allTestimonials[0] | null>(null);
+  const [isMarqueePaused, setIsMarqueePaused] = useState(false);
+
+  // Helper to truncate text for previews
+  const truncateText = (text: string, maxLength: number = 130) => {
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength).trim() + '...';
   };
 
+  // Duplicate list to achieve seamless infinite looping
+  const doubleMarqueeList = [...marqueeTestimonials, ...marqueeTestimonials];
+
   return (
     <section id="testimonials" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10 overflow-hidden">
       
-      {/* Decorative lines */}
+      {/* Decorative top/bottom lines */}
       <div className="absolute top-0 inset-x-12 h-[1px] bg-[#243C2F]/10" />
       <div className="absolute bottom-0 inset-x-12 h-[1px] bg-[#243C2F]/10" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
-        <div className="text-left mb-20 max-w-xl">
+      {/* Header Container */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative mb-16">
+        <div className="text-left max-w-xl">
           <span className="font-body text-[10px] uppercase tracking-[0.25em] text-[#79857B] font-semibold block mb-4">
             Client Reflections
           </span>
@@ -97,21 +108,23 @@ const Testimonials = () => {
           </h2>
           <div className="w-12 h-[1px] bg-[#C3B091] mt-6" />
         </div>
+      </div>
 
-        {/* Asymmetrical Grid of Review Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((item) => (
+      {/* Grid of Featured (Highlight) Reviews */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {featuredTestimonials.map((item) => (
             <motion.div
               key={item.id}
               onClick={() => setSelectedReview(item)}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="bg-[#F4F0E8] border border-[#243C2F]/5 p-8 rounded-2xl text-left flex flex-col justify-between min-h-[220px] transition-all hover:shadow-md cursor-none group"
+              className="bg-[#F4F0E8] border border-[#243C2F]/5 p-8 rounded-2xl text-left flex flex-col justify-between min-h-[280px] transition-all hover:shadow-md cursor-none group"
             >
               <div className="space-y-4">
                 <span className="font-heading text-4xl text-[#C3B091]/30 leading-none block select-none">“</span>
                 <p className="font-body text-sm text-[#79857B] leading-relaxed font-light">
-                  {truncateText(item.quote)}
+                  {truncateText(item.quote, 150)}
                 </p>
               </div>
 
@@ -131,67 +144,124 @@ const Testimonials = () => {
             </motion.div>
           ))}
         </div>
+      </div>
 
-        {/* Modal Overlay for Detailed Review */}
-        <AnimatePresence>
-          {selectedReview && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-[#1E221F]/60 backdrop-blur-md px-6"
-            >
-              {/* Click backdrop to exit */}
+      {/* Sub-label for Marquee */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-10 text-left">
+        <span className="font-body text-[10px] uppercase tracking-widest text-[#79857B]/60 font-semibold">
+          More reflections from our global community
+        </span>
+      </div>
+
+      {/* Infinite Scrolling Marquee Container with edge fades */}
+      <div className="relative w-full overflow-hidden py-4 select-none">
+        
+        {/* Soft edge blur overlays */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-[#FDFBF7] to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-[#FDFBF7] to-transparent z-20 pointer-events-none" />
+
+        {/* Marquee Row */}
+        <div 
+          className="w-full overflow-hidden flex"
+          onMouseEnter={() => setIsMarqueePaused(true)}
+          onMouseLeave={() => setIsMarqueePaused(false)}
+        >
+          <motion.div
+            className="flex whitespace-nowrap"
+            animate={{ x: isMarqueePaused ? undefined : [0, "-50%"] }}
+            transition={{
+              ease: "linear",
+              duration: 45,
+              repeat: Infinity,
+            }}
+          >
+            {doubleMarqueeList.map((item, idx) => (
               <div
-                className="absolute inset-0 cursor-none"
-                onClick={() => setSelectedReview(null)}
-              />
-
-              {/* Modal Card */}
-              <motion.div
-                initial={{ scale: 0.95, y: 15 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.95, y: 15 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-                className="relative bg-[#FDFBF7] w-full max-w-2xl rounded-3xl p-8 md:p-16 shadow-2xl z-10 text-left paper-grain border border-[#243C2F]/5"
+                key={`${item.id}-${idx}`}
+                onClick={() => setSelectedReview(item)}
+                className="inline-block bg-[#F4F0E8]/70 border border-[#243C2F]/5 p-6 rounded-2xl mx-3 whitespace-normal w-[280px] md:w-[320px] shrink-0 align-top text-left cursor-none hover:bg-[#F4F0E8] hover:border-[#243C2F]/10 hover:shadow-sm transition-all duration-300"
               >
-                {/* Close Button */}
-                <button
-                  onClick={() => setSelectedReview(null)}
-                  className="absolute top-6 right-6 p-2 text-[#79857B] hover:text-[#1E221F] transition-colors focus:outline-none cursor-none"
-                  aria-label="Close modal"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-
-                <div className="space-y-8 mt-4">
-                  {/* Decorative quote mark */}
-                  <span className="font-heading text-7xl text-[#C3B091] leading-none block select-none h-4">“</span>
-
-                  {/* Quote Body */}
-                  <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-light text-[#1E221F] leading-relaxed italic">
-                    {selectedReview.quote}
-                  </h3>
-
-                  <div className="w-12 h-[1px] bg-[#C3B091]" />
-
-                  {/* Credentials */}
-                  <div className="space-y-1">
-                    <span className="block font-body text-sm uppercase tracking-widest text-[#1E221F] font-bold">
-                      — {selectedReview.author}
+                <p className="font-body text-xs text-[#79857B] leading-relaxed font-light">
+                  "{truncateText(item.quote, 110)}"
+                </p>
+                <div className="mt-6 pt-3 border-t border-[#243C2F]/5 flex justify-between items-center">
+                  <div>
+                    <span className="block font-body text-[11px] uppercase tracking-wider text-[#1E221F] font-semibold">
+                      {item.author}
                     </span>
-                    <span className="block font-body text-xs text-[#79857B] font-light">
-                      {selectedReview.role}
+                    <span className="block font-body text-[8px] text-[#79857B] font-light mt-0.5">
+                      {item.role}
                     </span>
                   </div>
+                  <span className="font-body text-[9px] text-[#C3B091] font-semibold whitespace-nowrap ml-4">
+                    View
+                  </span>
                 </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
+
+      {/* Modal Overlay for Detailed Review */}
+      <AnimatePresence>
+        {selectedReview && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#1E221F]/60 backdrop-blur-md px-6"
+          >
+            {/* Click backdrop to exit */}
+            <div
+              className="absolute inset-0 cursor-none"
+              onClick={() => setSelectedReview(null)}
+            />
+
+            {/* Modal Card */}
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+              className="relative bg-[#FDFBF7] w-full max-w-2xl rounded-3xl p-8 md:p-16 shadow-2xl z-10 text-left paper-grain border border-[#243C2F]/5"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedReview(null)}
+                className="absolute top-6 right-6 p-2 text-[#79857B] hover:text-[#1E221F] transition-colors focus:outline-none cursor-none"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="space-y-8 mt-4">
+                {/* Decorative quote mark */}
+                <span className="font-heading text-7xl text-[#C3B091] leading-none block select-none h-4">“</span>
+
+                {/* Quote Body */}
+                <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-light text-[#1E221F] leading-relaxed italic">
+                  {selectedReview.quote}
+                </h3>
+
+                <div className="w-12 h-[1px] bg-[#C3B091]" />
+
+                {/* Credentials */}
+                <div className="space-y-1">
+                  <span className="block font-body text-sm uppercase tracking-widest text-[#1E221F] font-bold">
+                    — {selectedReview.author}
+                  </span>
+                  <span className="block font-body text-xs text-[#79857B] font-light">
+                    {selectedReview.role}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </section>
   );
 };
