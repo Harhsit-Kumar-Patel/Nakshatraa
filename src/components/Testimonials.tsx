@@ -7,78 +7,101 @@ const testimonials = [
     id: 1,
     quote: "I found the reading to be very genuine and insightful. It really resonated with me, and many of the points felt accurate and meaningful. Thank you for such an honest and thoughtful reading.",
     author: "Khushi Wadhwani",
-    role: "Student, Raipur, Chattisgarh, India"
+    role: "Student, Raipur, Chattisgarh, India",
+    categories: ["timing"]
   },
   {
     id: 2,
     quote: "I had a really great experience with this astrology reading. The astrologer listened patiently to all my problems, and gave simple, honest, and helpful advice. Everything was explained in a clear way and I left the session feeling much more positive. I would certainly recommend their services to anyone seeking true guidance.",
     author: "Sumant Krishna Singh",
-    role: "Prayagraj"
+    role: "Prayagraj",
+    categories: ["timing"]
   },
   {
     id: 3,
     quote: "Extremely knowledgeable and precise. Gave me clear insights in to my personal life.",
     author: "Divya Singh",
-    role: "Lucknow"
+    role: "Lucknow",
+    categories: ["relational"]
   },
   {
     id: 4,
     quote: "Very accurate predictions and timely solution,very patiently listens to all our problems and also explains the solutions in detail 🙏",
     author: "Sneha Singh",
-    role: "Noida"
+    role: "Noida",
+    categories: ["relational"]
   },
   {
     id: 5,
     quote: "I had a wonderful consultation and was truly blown away by the depth and accuracy of the reading. Without asking many details upfront, my current life situation were pinpointed and I got profound clarity on my career and personal life. The given remedies and suggestions are simple, logical, and very practical to follow, rather than being confusing or fear-driven. I left the session feeling calm, positive, and deeply guided. Highly recommended to anyone seeking honest and meaningful direction!",
     author: "Dr. Neeraj Singh",
-    role: "Varanasi"
+    role: "Varanasi",
+    categories: ["career", "relational"]
   },
   {
     id: 6,
     quote: "I found the insights provided to be deeply accurate and instrumental in helping me navigate the ups and downs of my journey. I am truly grateful for this platform, which offered valuable clarity and guided my perspective in the right direction.",
     author: "Kirti Agrawal",
-    role: "Student, Ghazipur"
+    role: "Student, Ghazipur",
+    categories: ["timing"]
   },
   {
     id: 7,
     quote: "I recently consulted this astrologer regarding my horoscope, and I was genuinely impressed by the experience. The analysis was detailed, thoughtful, and based on a thorough understanding of my birth chart. She explained the planetary influences in a clear and practical manner, making it easy to understand both current challenges and future opportunities. What stood out most was the honest and balanced guidance. Rather than making unrealistic promises, the advice was realistic, insightful, and focused on actionable remedies and personal growth.",
     author: "Shivangi Singh",
-    role: "Delhi"
+    role: "Delhi",
+    categories: ["timing"]
   },
   {
     id: 8,
     quote: "I am very happy with the consultation. The guidance was clear, easy to understand, and gave me a better way to look at my situation. It was a very positive experience, and I would happily recommend this service to anyone looking for honest and helpful astrology advice.",
     author: "Tripti Singh",
-    role: "Mirzapur"
+    role: "Mirzapur",
+    categories: ["timing"]
   },
   {
     id: 9,
     quote: "Your knowledge of planets and constellations is truly amazing. Heartfelt congratulations to you for that. My dear friend, besides being a wonderful teacher for children, you are also an excellent expert in astrology. Thank you for your guidance and dedication.",
     author: "Divya Mishra",
-    role: "Ghazipur"
+    role: "Ghazipur",
+    categories: ["career"]
   },
   {
     id: 10,
     quote: "Consulting with Nakshatra was a truly eye-opening experience. What impressed me most was how deeply they understood my chart and how seamlessly they translated complex astrological concepts into plain, actionable advice. Their predictions were accurate, and their logical approach gave me immense confidence. I will definitely be returning for future guidance.",
     author: "Shreya Patel",
-    role: "Teacher, Ghazipur"
+    role: "Teacher, Ghazipur",
+    categories: ["career", "timing"]
   },
   {
     id: 11,
     quote: "I had a wonderful experience with this consultation. The session was friendly, patient, and explained everything in a simple and easy-to-understand way. The advice was honest, helpful, and gave me a lot of confidence. I highly recommend this service.",
     author: "Shalini Singh",
-    role: "Varanasi"
+    role: "Varanasi",
+    categories: ["timing"]
   }
+];
+
+const categories = [
+  { id: 'all', label: 'All Reflections' },
+  { id: 'career', label: 'Career & Purpose' },
+  { id: 'relational', label: 'Relationships & Harmony' },
+  { id: 'timing', label: 'Timing & Growth' }
 ];
 
 const Testimonials = () => {
   const [selectedReview, setSelectedReview] = useState<typeof testimonials[0] | null>(null);
+  const [activeTab, setActiveTab] = useState('all');
 
   // Helper to truncate text for card previews
   const truncateText = (text: string, maxLength: number = 135) => {
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength).trim() + '...';
   };
+
+  const filteredTestimonials = activeTab === 'all'
+    ? testimonials
+    : testimonials.filter(item => item.categories.includes(activeTab));
 
   return (
     <section id="testimonials" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10 overflow-hidden">
@@ -88,49 +111,84 @@ const Testimonials = () => {
       <div className="absolute bottom-0 inset-x-12 h-[1px] bg-[#243C2F]/10" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
-        <div className="text-left mb-16 max-w-xl">
-          <span className="font-body text-[10px] uppercase tracking-[0.25em] text-[#79857B] font-semibold block mb-4">
-            Client Reflections
-          </span>
-          <h2 className="font-heading text-4xl font-light text-[#1E221F]">
-            Stories of clarity.
-          </h2>
-          <div className="w-12 h-[1px] bg-[#C3B091] mt-6" />
+        
+        {/* Header and Filter block */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
+          <div className="text-left max-w-xl">
+            <span className="font-body text-[10px] uppercase tracking-[0.25em] text-[#79857B] font-semibold block mb-4">
+              Client Reflections
+            </span>
+            <h2 className="font-heading text-4xl font-light text-[#1E221F]">
+              Stories of clarity.
+            </h2>
+            <div className="w-12 h-[1px] bg-[#C3B091] mt-6" />
+          </div>
+
+          {/* Minimal Tab Filter Controls */}
+          <div className="flex flex-wrap gap-2 md:gap-4 border-b border-[#243C2F]/5 pb-2 text-left justify-start">
+            {categories.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`relative px-4 py-2 font-body text-[10px] uppercase tracking-widest font-semibold transition-all duration-300 cursor-none focus:outline-none ${
+                  activeTab === tab.id ? 'text-[#243C2F]' : 'text-[#79857B]/60 hover:text-[#1E221F]'
+                }`}
+              >
+                {tab.label}
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="activeTabUnderline"
+                    className="absolute bottom-0 inset-x-4 h-[2px] bg-[#C3B091]"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Staggered CSS Masonry Wall */}
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-8 [column-fill:balance] w-full">
-          {testimonials.map((item) => (
-            <motion.div
-              key={item.id}
-              onClick={() => setSelectedReview(item)}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="break-inside-avoid mb-8 bg-[#F4F0E8] border border-[#243C2F]/5 p-8 rounded-2xl text-left flex flex-col justify-between transition-all hover:shadow-md cursor-none group inline-block w-full"
-            >
-              <div className="space-y-4">
-                <span className="font-heading text-4xl text-[#C3B091]/30 leading-none block select-none">“</span>
-                <p className="font-body text-sm text-[#79857B] leading-relaxed font-light">
-                  {truncateText(item.quote)}
-                </p>
-              </div>
+        {/* Staggered CSS Masonry Wall with Animation */}
+        <motion.div 
+          layout
+          className="columns-1 md:columns-2 lg:columns-3 gap-8 [column-fill:balance] w-full"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredTestimonials.map((item) => (
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+                key={item.id}
+                onClick={() => setSelectedReview(item)}
+                whileHover={{ y: -4 }}
+                className="break-inside-avoid mb-8 bg-[#F4F0E8] border border-[#243C2F]/5 p-8 rounded-2xl text-left flex flex-col justify-between transition-all hover:shadow-md cursor-none group inline-block w-full"
+              >
+                <div className="space-y-4">
+                  <span className="font-heading text-4xl text-[#C3B091]/30 leading-none block select-none">“</span>
+                  <p className="font-body text-sm text-[#79857B] leading-relaxed font-light">
+                    {truncateText(item.quote)}
+                  </p>
+                </div>
 
-              <div className="mt-8 pt-4 border-t border-[#243C2F]/5 flex justify-between items-baseline">
-                <div>
-                  <span className="block font-body text-xs uppercase tracking-wider text-[#1E221F] font-semibold">
-                    {item.author}
-                  </span>
-                  <span className="block font-body text-[9px] text-[#79857B] font-light mt-0.5">
-                    {item.role}
+                <div className="mt-8 pt-4 border-t border-[#243C2F]/5 flex justify-between items-baseline">
+                  <div>
+                    <span className="block font-body text-xs uppercase tracking-wider text-[#1E221F] font-semibold">
+                      {item.author}
+                    </span>
+                    <span className="block font-body text-[9px] text-[#79857B] font-light mt-0.5">
+                      {item.role}
+                    </span>
+                  </div>
+                  <span className="font-body text-[10px] text-[#C3B091] group-hover:text-[#243C2F] transition-colors duration-300 font-semibold whitespace-nowrap ml-4">
+                    Read Full →
                   </span>
                 </div>
-                <span className="font-body text-[10px] text-[#C3B091] group-hover:text-[#243C2F] transition-colors duration-300 font-semibold whitespace-nowrap ml-4">
-                  Read Full →
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
         {/* Modal Overlay for Detailed Review */}
         <AnimatePresence>
