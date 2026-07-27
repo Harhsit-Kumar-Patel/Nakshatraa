@@ -38,6 +38,30 @@ const testimonials = [
     quote: "I am very happy with the consultation. The guidance was clear, easy to understand, and gave me a better way to look at my situation. It was a very positive experience, and I would happily recommend this service to anyone looking for honest and helpful astrology advice.",
     author: "Tripti Singh",
     role: "Mirzapur"
+  },
+  {
+    id: 7,
+    quote: "Your knowledge of planets and constellations is truly amazing. Heartfelt congratulations to you for that. My dear friend, besides being a wonderful teacher for children, you are also an excellent expert in astrology. Thank you for your guidance and dedication.",
+    author: "Divya Mishra",
+    role: "Ghazipur"
+  },
+  {
+    id: 8,
+    quote: "Consulting with Nakshatra was a truly eye-opening experience. What impressed me most was how deeply they understood my chart and how seamlessly they translated complex astrological concepts into plain, actionable advice. Their predictions were accurate, and their logical approach gave me immense confidence. I will definitely be returning for future guidance.",
+    author: "Shreya Patel",
+    role: "Teacher, Ghazipur"
+  },
+  {
+    id: 9,
+    quote: "I recently consulted this astrologer regarding my horoscope, and I was genuinely impressed by the experience. The analysis was detailed, thoughtful, and based on a thorough understanding of my birth chart. She explained the planetary influences in a clear and practical manner, making it easy to understand both current challenges and future opportunities. What stood out most was the honest and balanced guidance. Rather than making unrealistic promises, the advice was realistic, insightful, and focused on actionable remedies and personal growth. Many of the observations about my personality, life events, and ongoing situations were remarkably accurate. I appreciate the patience with which all my questions were answered and the time taken to explain the reasoning behind the predictions and recommendations. Overall, it was a valuable and enlightening consultation, and I would recommend her to anyone seeking genuine astrological guidance.",
+    author: "Shivangi Singh",
+    role: "Delhi"
+  },
+  {
+    id: 10,
+    quote: "I had a wonderful experience with this consultation. The session was friendly, patient, and explained everything in a simple and easy-to-understand way. The advice was honest, helpful, and gave me a lot of confidence. I highly recommend this service.",
+    author: "Shalini Singh",
+    role: "Varanasi"
   }
 ];
 
