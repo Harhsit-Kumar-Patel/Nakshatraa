@@ -39,7 +39,7 @@ const Hero = ({ onOpenBooking }: HeroProps) => {
               transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[#1E221F] leading-[1.15] tracking-tight"
             >
-              Sometimes, clarity begins with <br />
+              Sometimes, clarity begins with{' '}
               <span className="italic font-normal text-[#243C2F]">a conversation.</span>
             </motion.h1>
           </div>
