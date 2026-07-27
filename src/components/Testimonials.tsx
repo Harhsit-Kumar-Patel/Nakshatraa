@@ -62,6 +62,12 @@ const testimonials = [
     quote: "I had a wonderful experience with this consultation. The session was friendly, patient, and explained everything in a simple and easy-to-understand way. The advice was honest, helpful, and gave me a lot of confidence. I highly recommend this service.",
     author: "Shalini Singh",
     role: "Varanasi"
+  },
+  {
+    id: 11,
+    quote: "I had a wonderful consultation and was truly blown away by the depth and accuracy of the reading. Without asking many details upfront, my current life situation were pinpointed and I got profound clarity on my career and personal life. The given remedies and suggestions are simple, logical, and very practical to follow, rather than being confusing or fear-driven. I left the session feeling calm, positive, and deeply guided. Highly recommended to anyone seeking honest and meaningful direction!",
+    author: "Dr. Neeraj Singh",
+    role: "Varanasi"
   }
 ];
 
