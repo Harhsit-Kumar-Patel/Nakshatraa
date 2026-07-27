@@ -20,6 +20,9 @@ const Footer = () => {
             <a href="#testimonials" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] hover:text-[#1E221F] font-semibold cursor-none">
               Reflections
             </a>
+            <a href="https://www.instagram.com/nakshatraa.online/" target="_blank" rel="noopener noreferrer" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] hover:text-[#1E221F] font-semibold cursor-none">
+              Instagram
+            </a>
           </div>
         </div>
 

@@ -30,6 +30,20 @@ const Contact = () => {
 
               <div>
                 <span className="block font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
+                  Instagram
+                </span>
+                <a
+                  href="https://www.instagram.com/nakshatraa.online/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-heading text-xl md:text-2xl font-light text-[#1E221F] hover:text-[#C3B091] transition-colors border-b border-[#1E221F]/10 hover:border-[#C3B091] pb-1 cursor-none"
+                >
+                  @nakshatraa.online
+                </a>
+              </div>
+
+              <div>
+                <span className="block font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
                   Availability
                 </span>
                 <p className="font-body text-sm text-[#79857B] font-light">
