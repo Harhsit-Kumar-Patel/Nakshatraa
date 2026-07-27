@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const testimonials = [
   {
@@ -71,22 +72,56 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedReview, setSelectedReview] = useState<typeof testimonials[0] | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const featuredReviews = testimonials.slice(0, 3);
-  const remainingReviews = testimonials.slice(3);
+  // Monitor viewport size to adjust slider limits dynamically
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const maxIdx = isMobile ? testimonials.length - 1 : testimonials.length - 2;
+
+  // Defensive index bounding check after resize events
+  useEffect(() => {
+    if (activeIdx > maxIdx) {
+      setActiveIdx(maxIdx);
+    }
+  }, [isMobile, maxIdx, activeIdx]);
+
+  const handlePrev = () => {
+    setActiveIdx((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleNext = () => {
+    setActiveIdx((prev) => Math.min(prev + 1, maxIdx));
+  };
+
+  // Helper to truncate text for card previews
+  const truncateText = (text: string, maxLength: number = 130) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + '...';
+  };
+
+  const progressPercent = maxIdx === 0 ? 100 : (activeIdx / maxIdx) * 100;
 
   return (
-    <section id="testimonials" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
+    <section id="testimonials" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10 overflow-hidden">
       
       {/* Decorative top/bottom lines */}
       <div className="absolute top-0 inset-x-12 h-[1px] bg-[#243C2F]/10" />
       <div className="absolute bottom-0 inset-x-12 h-[1px] bg-[#243C2F]/10" />
 
-      <div className="max-w-4xl mx-auto px-6 md:px-12 relative text-left">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative">
         
         {/* Section Header */}
-        <div className="mb-20">
+        <div className="text-left mb-16 max-w-xl">
           <span className="font-body text-[10px] uppercase tracking-[0.25em] text-[#79857B] font-semibold block mb-4">
             Client Reflections
           </span>
@@ -96,82 +131,146 @@ const Testimonials = () => {
           <div className="w-12 h-[1px] bg-[#C3B091] mt-6" />
         </div>
 
-        {/* Testimonials Book Reel - Single Column */}
-        <div className="space-y-16">
-          
-          {/* 1. Featured Top 3 Reviews */}
-          {featuredReviews.map((item) => (
-            <div 
-              key={item.id}
-              className="border-b border-[#243C2F]/5 pb-16 last:border-b-0 last:pb-0"
-            >
-              <div className="space-y-4">
-                <span className="font-heading text-4xl text-[#C3B091]/30 leading-none block select-none">“</span>
-                <p className="font-heading text-lg sm:text-xl font-light text-[#1E221F] leading-relaxed italic pr-4 md:pr-12">
-                  {item.quote}
-                </p>
-                <div className="pt-2">
-                  <span className="block font-body text-xs uppercase tracking-widest text-[#1E221F] font-bold">
-                    — {item.name}
-                  </span>
-                  <span className="block font-body text-[10px] text-[#79857B] font-light mt-0.5">
-                    {item.role}
+        {/* Stage Slider Window */}
+        <div className="relative w-full overflow-hidden">
+          <motion.div 
+            className="flex gap-8"
+            animate={{ 
+              x: isMobile 
+                ? `calc(-${activeIdx * 100}% - ${activeIdx * 32}px)` 
+                : `calc(-${activeIdx * 50}% - ${activeIdx * 16}px)` 
+            }}
+            transition={{ type: 'spring', damping: 28, stiffness: 220 }}
+          >
+            {testimonials.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => setSelectedReview(item)}
+                className="w-full md:w-[calc(50%-16px)] shrink-0 bg-[#F4F0E8] border border-[#243C2F]/5 p-8 rounded-2xl text-left flex flex-col justify-between min-h-[250px] transition-all hover:shadow-md cursor-none group"
+              >
+                <div className="space-y-4">
+                  <span className="font-heading text-4xl text-[#C3B091]/30 leading-none block select-none">“</span>
+                  <p className="font-body text-sm text-[#79857B] leading-relaxed font-light">
+                    {truncateText(item.quote, 150)}
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-[#243C2F]/5 flex justify-between items-baseline">
+                  <div>
+                    <span className="block font-body text-xs uppercase tracking-wider text-[#1E221F] font-semibold">
+                      {item.name}
+                    </span>
+                    <span className="block font-body text-[9px] text-[#79857B] font-light mt-0.5">
+                      {item.role}
+                    </span>
+                  </div>
+                  <span className="font-body text-[10px] text-[#C3B091] group-hover:text-[#243C2F] transition-colors duration-300 font-semibold whitespace-nowrap ml-4">
+                    Read Full →
                   </span>
                 </div>
               </div>
-            </div>
-          ))}
-
-          {/* 2. Remaining Collapsible Reviews */}
-          <AnimatePresence initial={false}>
-            {isExpanded && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="overflow-hidden space-y-16"
-              >
-                {/* Visual separator before expanded list */}
-                <div className="border-t border-[#243C2F]/5 pt-16" />
-
-                {remainingReviews.map((item) => (
-                  <div 
-                    key={item.id}
-                    className="border-b border-[#243C2F]/5 pb-16 last:border-b-0 last:pb-0"
-                  >
-                    <div className="space-y-4">
-                      <span className="font-heading text-4xl text-[#C3B091]/30 leading-none block select-none">“</span>
-                      <p className="font-heading text-lg sm:text-xl font-light text-[#1E221F] leading-relaxed italic pr-4 md:pr-12">
-                        {item.quote}
-                      </p>
-                      <div className="pt-2">
-                        <span className="block font-body text-xs uppercase tracking-widest text-[#1E221F] font-bold">
-                          — {item.name}
-                        </span>
-                        <span className="block font-body text-[10px] text-[#79857B] font-light mt-0.5">
-                          {item.role}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+            ))}
+          </motion.div>
         </div>
 
-        {/* 3. Action Button (Expand / Collapse) */}
-        <div className="mt-20 text-center">
+        {/* Navigation Controls & Progress Indicator */}
+        <div className="flex items-center space-x-6 justify-between max-w-xl mx-auto mt-16 pt-8 border-t border-[#243C2F]/5">
+          {/* Previous Arrow Button */}
           <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="px-8 py-3.5 border border-[#243C2F]/20 text-[#79857B] hover:border-[#243C2F] hover:text-[#1E221F] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all duration-500 cursor-none"
+            onClick={handlePrev}
+            disabled={activeIdx === 0}
+            className="p-2.5 rounded-full border border-[#243C2F]/10 text-[#79857B] hover:border-[#243C2F] hover:text-[#1E221F] disabled:opacity-30 disabled:border-[#243C2F]/10 disabled:text-[#79857B] transition-all duration-300 focus:outline-none cursor-none flex items-center justify-center"
+            aria-label="Previous testimonials"
           >
-            {isExpanded ? 'Collapse Reflections' : `Show remaining ${remainingReviews.length} reflections +`}
+            <ArrowLeft className="w-4 h-4" />
+          </button>
+
+          {/* Elegant Horizontal Progress Bar */}
+          <div className="flex-1 h-[2px] bg-[#243C2F]/5 relative rounded-full overflow-hidden">
+            <motion.div
+              className="absolute top-0 bottom-0 left-0 bg-[#C3B091]"
+              animate={{ width: `${progressPercent}%` }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
+
+          {/* Current Page Counter */}
+          <span className="font-body text-[10px] uppercase tracking-[0.25em] text-[#79857B] font-semibold whitespace-nowrap select-none">
+            {String(activeIdx + 1).padStart(2, '0')} / {String(testimonials.length).padStart(2, '0')}
+          </span>
+
+          {/* Next Arrow Button */}
+          <button
+            onClick={handleNext}
+            disabled={activeIdx === maxIdx}
+            className="p-2.5 rounded-full border border-[#243C2F]/10 text-[#79857B] hover:border-[#243C2F] hover:text-[#1E221F] disabled:opacity-30 disabled:border-[#243C2F]/10 disabled:text-[#79857B] transition-all duration-300 focus:outline-none cursor-none flex items-center justify-center"
+            aria-label="Next testimonials"
+          >
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
       </div>
+
+      {/* Full Detailed Modal Overlay */}
+      <AnimatePresence>
+        {selectedReview && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#1E221F]/60 backdrop-blur-md px-6"
+          >
+            {/* Click backdrop to exit */}
+            <div
+              className="absolute inset-0 cursor-none"
+              onClick={() => setSelectedReview(null)}
+            />
+
+            {/* Modal Card Container */}
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+              className="relative bg-[#FDFBF7] w-full max-w-2xl rounded-3xl p-8 md:p-16 shadow-2xl z-10 text-left paper-grain border border-[#243C2F]/5"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedReview(null)}
+                className="absolute top-6 right-6 p-2 text-[#79857B] hover:text-[#1E221F] transition-colors focus:outline-none cursor-none"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="space-y-8 mt-4">
+                {/* Decorative quote mark */}
+                <span className="font-heading text-7xl text-[#C3B091] leading-none block select-none h-4">“</span>
+
+                {/* Full Quote */}
+                <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-light text-[#1E221F] leading-relaxed italic pr-4 md:pr-12">
+                  {selectedReview.quote}
+                </h3>
+
+                <div className="w-12 h-[1px] bg-[#C3B091]" />
+
+                {/* Author Credentials */}
+                <div className="space-y-1">
+                  <span className="block font-body text-sm uppercase tracking-widest text-[#1E221F] font-bold">
+                    — {selectedReview.name}
+                  </span>
+                  <span className="block font-body text-xs text-[#79857B] font-light">
+                    {selectedReview.role}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </section>
   );
 };
