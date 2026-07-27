@@ -8,7 +8,7 @@ const Footer = () => {
         {/* Top section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pb-12 border-b border-[#243C2F]/5">
           <span className="font-heading text-xl md:text-2xl font-light tracking-[0.15em] text-[#1E221F]">
-            NAKSHATRAA
+            NAKSHATRA
           </span>
           <div className="flex space-x-8">
             <a href="#philosophy" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] hover:text-[#1E221F] font-semibold cursor-none">
@@ -31,7 +31,7 @@ const Footer = () => {
               Disclaimer
             </span>
             <p className="font-body text-[10px] leading-relaxed font-light max-w-2xl">
-              All consultation sessions, reports, and timing evaluations provided by Nakshatraa are structured to offer timing cycle perspectives and natural strengths analysis. They do not constitute legal, medical, psychiatric, or financial advice. Clients retain absolute decision-making agency and accountability for all personal actions.
+              All consultation sessions, reports, and timing evaluations provided by Nakshatra are structured to offer timing cycle perspectives and natural strengths analysis. They do not constitute legal, medical, psychiatric, or financial advice. Clients retain absolute decision-making agency and accountability for all personal actions.
             </p>
           </div>
 
@@ -41,7 +41,7 @@ const Footer = () => {
               Practice
             </span>
             <p className="font-body text-[10px] leading-relaxed font-light">
-              &copy; {currentYear} Nakshatraa. All rights reserved. <br />
+              &copy; {currentYear} Nakshatra. All rights reserved. <br />
               Secure Digital Consultation Practice.
             </p>
           </div>

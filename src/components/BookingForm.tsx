@@ -131,8 +131,8 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
           partner_birth_place: isRelational ? formData.partnerBirthPlace : 'N/A',
 
           message: formData.message,
-          subject: `New Nakshatraa Booking Request - ${formData.name}`,
-          from_name: 'Nakshatraa Website'
+          subject: `New Nakshatra Booking Request - ${formData.name}`,
+          from_name: 'Nakshatra Website'
         })
       });
       const data = await response.json();

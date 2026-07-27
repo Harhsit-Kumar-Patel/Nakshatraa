@@ -44,7 +44,7 @@ const Crossroads = () => {
           </div>
           <div className="lg:col-span-6 text-left pt-2 lg:pt-8">
             <p className="font-body text-base text-[#79857B] leading-relaxed font-light">
-              We do not offer fortune-telling or quick fixes. Nakshatraa exists to provide a calm, objective space to discuss life transits when major decisions require deeper perspective.
+              We do not offer fortune-telling or quick fixes. Nakshatra exists to provide a calm, objective space to discuss life transits when major decisions require deeper perspective.
             </p>
           </div>
         </div>

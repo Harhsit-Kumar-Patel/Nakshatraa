@@ -39,8 +39,8 @@ const ReviewForm = () => {
           name: formData.name,
           role_location: formData.role || 'Client',
           review_content: formData.review,
-          subject: `New Nakshatraa Review Submitted - ${formData.name}`,
-          from_name: 'Nakshatraa Reviews'
+          subject: `New Nakshatra Review Submitted - ${formData.name}`,
+          from_name: 'Nakshatra Reviews'
         })
       });
 

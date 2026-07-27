@@ -56,7 +56,7 @@ const Navbar = ({ onOpenBooking }: NavbarProps) => {
           {/* Logo */}
           <a href="#home" onClick={(e) => handleLinkClick(e, '#home')} className="flex items-center space-x-2">
             <span className="font-heading text-2xl md:text-3xl font-light tracking-[0.12em] text-[#1E221F] hover:text-[#243C2F] transition-colors duration-300">
-              NAKSHATRAA
+              NAKSHATRA
             </span>
           </a>
 

@@ -21,7 +21,7 @@ const About = () => {
           {/* Right Column: Story Narrative */}
           <div className="lg:col-span-7 text-left space-y-8 lg:pt-8">
             <p className="font-body text-base md:text-lg text-[#79857B] leading-relaxed font-light">
-              We do not treat consultations as transaction points. Nakshatraa was founded on the principle that self-navigation requires deep focus, absolute confidentiality, and respect for personal choices.
+              We do not treat consultations as transaction points. Nakshatra was founded on the principle that self-navigation requires deep focus, absolute confidentiality, and respect for personal choices.
             </p>
             
             <p className="font-body text-sm md:text-base text-[#79857B] leading-relaxed font-light">

@@ -148,7 +148,7 @@ function App() {
                   {/* Exit header */}
                   <div className="flex justify-between items-center mb-8 border-b border-[#243C2F]/10 pb-4">
                     <span className="font-heading text-xl font-light tracking-widest text-[#243C2F]">
-                      NAKSHATRAA
+                      NAKSHATRA
                     </span>
                     <button
                       onClick={() => setIsBookingOpen(false)}

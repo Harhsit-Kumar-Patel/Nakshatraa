@@ -31,7 +31,7 @@ const Loader = ({ onFinish }: { onFinish: () => void }) => {
             transition={{ duration: 1, delay: 0.4, ease: [0.76, 0, 0.24, 1] }}
             className="font-heading text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.15em] text-[#1E221F]"
           >
-            NAKSHATRAA
+            NAKSHATRA
           </motion.h1>
         </div>
 
