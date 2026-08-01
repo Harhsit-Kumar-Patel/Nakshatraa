@@ -3,10 +3,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Lenis from 'lenis';
 import { X } from 'lucide-react';
 import Loader from './components/Loader';
-import MouseFollower from './components/MouseFollower';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Crossroads from './components/Crossroads';
 import Services from './components/Services';
 import About from './components/About';
 import Process from './components/Process';
@@ -16,6 +14,7 @@ import FAQ from './components/FAQ';
 import BookingForm from './components/BookingForm';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { Spotlight } from './components/core/spotlight';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +76,7 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#FDFBF7] text-[#1E221F] paper-grain overflow-x-hidden selection:bg-[#C3B091]/30 selection:text-[#1E221F]">
+    <div className="relative min-h-screen bg-[#FAF8F5] text-[#0F1110] paper-grain overflow-x-hidden selection:bg-[#A6823C]/30 selection:text-[#0F1110]">
       {errorLog && (
         <div className="fixed top-0 left-0 right-0 z-[99999] bg-red-600 text-white p-4 font-mono text-xs select-text">
           <strong>JS Error Encountered:</strong> {errorLog}
@@ -98,8 +97,44 @@ function App() {
           transition={{ duration: 1 }}
           className="relative"
         >
-          {/* Custom cursor follow dot */}
-          <MouseFollower />
+          {/* Global Screen Spotlight with Custom Color Gradient & Grid Pattern */}
+          <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+            <Spotlight
+              className="bg-gradient-to-tr from-[#A6823C]/12 via-[#C67B5C]/8 to-[#8B7BB3]/8 blur-3xl"
+              size={550}
+              springOptions={{
+                bounce: 0.15,
+                duration: 0.25,
+              }}
+            />
+            {/* Fine Stardust Chart Grid Overlay */}
+            <svg className="h-full w-full opacity-60">
+              <defs>
+                <pattern
+                  id="grid-pattern"
+                  width="16"
+                  height="16"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <path
+                    d="M0 8H8M8 8V0M8 8H16M8 8V16"
+                    stroke="#A6823C"
+                    strokeOpacity="0.08"
+                    strokeWidth="0.5"
+                  />
+                  <rect
+                    x="7"
+                    y="7"
+                    width="2"
+                    height="2"
+                    fill="#A6823C"
+                    fillOpacity="0.12"
+                  />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+            </svg>
+          </div>
 
           {/* Sticky Header Nav */}
           <Navbar onOpenBooking={() => openBookingModal('')} />
@@ -107,14 +142,13 @@ function App() {
           {/* Main sections */}
           <main>
             <Hero onOpenBooking={() => openBookingModal('')} />
-            <Crossroads />
             <Services onBookService={openBookingModal} />
             <About />
             <Process />
             <Testimonials />
             <ReviewForm />
             <FAQ />
-            <BookingForm />
+            <BookingForm isModal={false} />
             <Contact />
           </main>
 
@@ -129,11 +163,11 @@ function App() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-                className="fixed inset-0 z-50 flex justify-end bg-[#1E221F]/40 backdrop-blur-sm"
+                className="fixed inset-0 z-50 flex justify-end bg-[#0F1110]/40 backdrop-blur-sm"
               >
                 {/* Backdrop Click */}
                 <div 
-                  className="absolute inset-0 cursor-none" 
+                  className="absolute inset-0 " 
                   onClick={() => setIsBookingOpen(false)} 
                 />
 
@@ -143,16 +177,16 @@ function App() {
                   animate={{ x: 0 }}
                   exit={{ x: '100%' }}
                   transition={{ type: 'tween', ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
-                  className="relative w-full max-w-2xl bg-[#FDFBF7] h-full shadow-2xl p-8 md:p-12 overflow-y-auto z-10 paper-grain flex flex-col justify-between"
+                  className="relative w-full max-w-2xl bg-[#FAF8F5] h-full shadow-2xl p-8 md:p-12 overflow-y-auto z-10 paper-grain flex flex-col justify-between"
                 >
                   {/* Exit header */}
-                  <div className="flex justify-between items-center mb-8 border-b border-[#243C2F]/10 pb-4">
-                    <span className="font-heading text-xl font-light tracking-widest text-[#243C2F]">
+                  <div className="flex justify-between items-center mb-8 border-b border-[#A6823C]/10 pb-4">
+                    <span className="font-heading text-xl font-light tracking-widest text-[#A6823C]">
                       NAKSHATRA
                     </span>
                     <button
                       onClick={() => setIsBookingOpen(false)}
-                      className="p-2 text-[#79857B] hover:text-[#1E221F] transition-colors focus:outline-none cursor-none"
+                      className="p-2 text-[#4F5651] hover:text-[#0F1110] transition-colors focus:outline-none "
                       aria-label="Close booking modal"
                     >
                       <X className="w-5 h-5" />
@@ -161,10 +195,10 @@ function App() {
 
                   {/* Form Container */}
                   <div className="flex-grow">
-                    <h3 className="font-heading text-3xl font-light text-[#1E221F] mb-2 text-left">
+                    <h3 className="font-heading text-3xl font-light text-[#0F1110] mb-2 text-left">
                       Consultation Booking
                     </h3>
-                    <p className="font-body text-xs text-[#79857B] mb-8 text-left">
+                    <p className="font-body text-xs text-[#4F5651] mb-8 text-left">
                       Please enter your details below. Astrological transits will be calculated based on your birth coordinates.
                     </p>
                     <BookingForm 

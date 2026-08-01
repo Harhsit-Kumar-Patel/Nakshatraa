@@ -1,5 +1,55 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatedGroup } from './core/animated-group';
+import { InView } from './core/in-view';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.09,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
+
+const accordionGroupVariants = {
+  container: {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  },
+  item: {
+    hidden: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.8,
+        type: 'spring' as const,
+        bounce: 0.2,
+      },
+    },
+  },
+};
 
 const faqData = [
   {
@@ -33,14 +83,14 @@ interface FAQItemProps {
 
 const FAQItem = ({ question, answer, isOpen, onToggle }: FAQItemProps) => {
   return (
-    <div className="border-b border-[#243C2F]/10 py-6">
+    <div className="border-b border-[#A6823C]/10 py-6">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between text-left py-2 font-heading text-lg md:text-xl font-light text-[#1E221F] hover:text-[#C3B091] transition-colors focus:outline-none cursor-none"
+        className="w-full flex items-center justify-between text-left py-2 font-heading text-lg md:text-xl font-light text-[#0F1110] hover:text-[#A6823C] transition-colors focus:outline-none "
         aria-expanded={isOpen}
       >
         <span>{question}</span>
-        <span className="ml-4 text-xs font-light text-[#C3B091]">
+        <span className="ml-4 text-xs font-light text-[#A6823C]">
           {isOpen ? '✦ Close' : '✦ Open'}
         </span>
       </button>
@@ -54,7 +104,7 @@ const FAQItem = ({ question, answer, isOpen, onToggle }: FAQItemProps) => {
             transition={{ duration: 0.4, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <p className="font-body text-xs md:text-sm text-[#79857B] leading-relaxed pt-4 pb-2 pr-12 font-light">
+            <p className="font-body text-xs md:text-sm text-[#4F5651] leading-relaxed pt-4 pb-2 pr-12 font-light">
               {answer}
             </p>
           </motion.div>
@@ -72,34 +122,41 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
-      <div className="max-w-4xl mx-auto px-6 md:px-12">
-        
+    <section id="faq" className="py-14 md:py-18 bg-[#FAF8F5] relative z-10 border-b border-[#A6823C]/10">
+      <InView
+        variants={containerVariants}
+        viewOptions={{ once: true, margin: '0px 0px -150px 0px' }}
+        className="max-w-4xl mx-auto px-6 md:px-12"
+      >
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
+        <motion.div variants={itemVariants} className="text-center mb-12 md:mb-16">
+          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#4F5651] font-semibold block mb-4">
             Inquiries
           </span>
-          <h2 className="font-heading text-4xl font-light text-[#1E221F]">
+          <h2 className="font-heading text-4xl font-light text-[#0F1110]">
             Frequently Asked Questions
           </h2>
-          <div className="w-12 h-[1px] bg-[#C3B091] mx-auto mt-6" />
-        </div>
+          <div className="w-12 h-[1px] bg-[#A6823C] mx-auto mt-6" />
+        </motion.div>
 
         {/* Accordion Wrapper */}
-        <div className="border-t border-[#243C2F]/10">
+        <AnimatedGroup
+          className="border-t border-[#A6823C]/10 w-full"
+          variants={accordionGroupVariants}
+        >
           {faqData.map((item, idx) => (
-            <FAQItem
-              key={idx}
-              question={item.question}
-              answer={item.answer}
-              isOpen={openIndex === idx}
-              onToggle={() => handleToggle(idx)}
-            />
+            <div key={idx} className="w-full">
+              <FAQItem
+                question={item.question}
+                answer={item.answer}
+                isOpen={openIndex === idx}
+                onToggle={() => handleToggle(idx)}
+              />
+            </div>
           ))}
-        </div>
+        </AnimatedGroup>
 
-      </div>
+      </InView>
     </section>
   );
 };

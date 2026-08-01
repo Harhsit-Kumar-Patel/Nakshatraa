@@ -1,5 +1,30 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatedGroup } from './core/animated-group';
+
+const groupVariants = {
+  container: {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.09,
+      },
+    },
+  },
+  item: {
+    hidden: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 1,
+        type: 'spring' as const,
+        bounce: 0.2,
+      },
+    },
+  },
+};
 
 const steps = [
   {
@@ -33,63 +58,72 @@ const Process = () => {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   return (
-    <section className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
+    <section className="py-14 md:py-18 bg-[#FAF8F5] relative z-10 border-b border-[#A6823C]/10">
       
-      {/* Background soft plaster glow */}
-      <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-white/40 rounded-full blur-[100px] pointer-events-none" />
+      {/* Background cosmic glow */}
+      <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-gradient-to-tr from-[#8B7BB3]/10 to-transparent rounded-full blur-[110px] pointer-events-none animate-pulse-glow" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
           
           {/* Left Column: Heading & Outline */}
           <div className="lg:col-span-5 text-left lg:sticky lg:top-36">
-            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
+            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#4F5651] font-semibold block mb-4">
               Methodology
             </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1E221F] leading-tight mb-8">
+            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#0F1110] leading-tight mb-8">
               A structured approach to self-alignment.
             </h2>
-            <p className="font-body text-sm text-[#79857B] leading-relaxed font-light mb-6">
+            <p className="font-body text-sm text-[#4F5651] leading-relaxed font-light mb-6">
               Our consultation is a mutual conversation. We translate celestial configurations into clear, logical steps to ensure you leave with balanced insights.
             </p>
-            <div className="w-12 h-[1px] bg-[#C3B091]" />
+            <div className="w-12 h-[1px] bg-[#A6823C]" />
           </div>
 
           {/* Right Column: Interactive Vertical Timeline */}
-          <div className="lg:col-span-7 text-left space-y-12 relative pl-8 border-l border-[#243C2F]/15 ml-4">
+          <div className="lg:col-span-7 relative p-8 md:p-12 border border-[#A6823C]/10 bg-white/80 shadow-sm rounded-3xl backdrop-blur-sm">
+            {/* Corner Star Nodes */}
+            <div className="absolute -top-1 -left-1 w-2 h-2 bg-[#A6823C] rounded-full shadow-[0_0_8px_#A6823C]" />
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#A6823C] rounded-full shadow-[0_0_8px_#A6823C]" />
+            <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-[#A6823C] rounded-full shadow-[0_0_8px_#A6823C]" />
+            <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-[#A6823C] rounded-full shadow-[0_0_8px_#A6823C]" />
             
-            {steps.map((step, idx) => (
-              <motion.div
-                key={idx}
-                onMouseEnter={() => setHoveredIdx(idx)}
-                onMouseLeave={() => setHoveredIdx(null)}
-                className="relative group transition-all duration-300"
-              >
+            <AnimatedGroup
+              className="text-left space-y-12 relative pl-8 border-l border-[#A6823C]/15 ml-4 w-full"
+              variants={groupVariants}
+            >
+              {steps.map((step, idx) => (
+                <div
+                  key={idx}
+                  onMouseEnter={() => setHoveredIdx(idx)}
+                  onMouseLeave={() => setHoveredIdx(null)}
+                  className="relative group transition-all duration-300"
+                >
                 {/* Connecting bullet point */}
-                <div className={`absolute -left-[38px] top-1.5 w-4 h-4 rounded-full border border-[#243C2F] bg-[#FDFBF7] flex items-center justify-center transition-all duration-300 ${
-                  hoveredIdx === idx ? 'scale-125 bg-[#243C2F]' : ''
+                <div className={`absolute -left-[38px] top-1.5 w-4 h-4 rounded-full border border-[#A6823C] bg-[#FAF8F5] flex items-center justify-center transition-all duration-300 ${
+                  hoveredIdx === idx ? 'scale-125 bg-[#A6823C]' : ''
                 }`}>
-                  <div className="w-1.5 h-1.5 bg-[#C3B091] rounded-full" />
+                  <div className="w-1.5 h-1.5 bg-[#A6823C] rounded-full" />
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-baseline space-x-4">
-                    <span className="font-heading text-3xl font-light text-[#C3B091]">
+                    <span className="font-heading text-3xl font-light text-[#A6823C]">
                       {step.num}
                     </span>
-                    <h3 className="font-heading text-xl md:text-2xl font-light text-[#1E221F] group-hover:text-[#C3B091] transition-colors duration-300">
+                    <h3 className="font-heading text-xl md:text-2xl font-light text-[#0F1110] group-hover:text-[#A6823C] transition-colors duration-300">
                       {step.title}
                     </h3>
                   </div>
-                  <p className="font-body text-sm md:text-base text-[#79857B] leading-relaxed font-light max-w-xl">
+                  <p className="font-body text-sm md:text-base text-[#4F5651] leading-relaxed font-light max-w-xl">
                     {step.desc}
                   </p>
                 </div>
-              </motion.div>
-            ))}
+                </div>
+              ))}
+            </AnimatedGroup>
 
           </div>
-
         </div>
       </div>
     </section>

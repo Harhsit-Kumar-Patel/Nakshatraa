@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatedGroup } from './core/animated-group';
+import { GlowEffect } from './core/glow-effect';
+
 
 const experiences = [
   {
     id: 'life',
     num: '01',
     title: 'Life Consultation',
-    desc: 'A comprehensive evaluation of your current life cycle. We examine foundational strengths, planetary timelines (Dashas), and current transits to help you make key decisions with clear perspective.',
+    desc: 'A comprehensive evaluation of your current life cycle. We examine foundational strengths, planetary timelines (Dashas), and transits to help you make decisions.',
     details: 'During this 60-minute session, we construct your natal chart to trace underlying themes. Rather than predicting events, we focus on identifying period-based strengths and aligning choices with your natural timeline.'
   },
   {
     id: 'relationship',
     num: '02',
     title: 'Relationship Guidance',
-    desc: 'Perspectives on resolving conflicts, improving communication, and understanding interpersonal dynamics between partners or close family members.',
+    desc: 'Perspectives on resolving conflicts, improving communication, and understanding interpersonal dynamics between partners or family members.',
     details: 'This session uses compatibility analysis to highlight relational dynamics. We identify areas of friction, emotional alignment, and communication style differences to offer practical pathways for harmony.'
   },
   {
@@ -57,102 +60,127 @@ interface ServicesProps {
   onBookService: (serviceName: string) => void;
 }
 
+const groupVariants = {
+  container: {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.09,
+      },
+    },
+  },
+  item: {
+    hidden: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 1,
+        type: 'spring' as const,
+        bounce: 0.2,
+      },
+    },
+  },
+};
+
 const Services = ({ onBookService }: ServicesProps) => {
-  const [activeIdx, setActiveIdx] = useState<number>(0);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
-    <section id="experiences" className="py-20 md:py-28 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10 overflow-hidden">
+    <section id="experiences" className="py-16 md:py-20 bg-[#FAF8F5] relative z-10 border-b border-[#A6823C]/10 overflow-hidden">
       
+      {/* Background Soft Glow */}
+      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#A6823C]/5 via-[#1C3326]/3 to-transparent rounded-full blur-[100px] pointer-events-none animate-pulse-glow" />
+
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Header */}
         <div className="text-left mb-12 md:mb-16 max-w-2xl">
-          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
+          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#4F5651] font-semibold block mb-4">
             Experiences
           </span>
-          <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1E221F] leading-tight">
+          <h2 className="font-heading text-4xl md:text-5xl font-light text-[#0F1110] leading-tight">
             Consultations designed for clarity.
           </h2>
-          <div className="w-12 h-[1px] bg-[#243C2F] mt-6" />
+          <div className="w-12 h-[1px] bg-[#A6823C] mt-6" />
         </div>
 
-        {/* Gallery List Layout */}
-        <div className="max-w-4xl mx-auto border-t border-[#243C2F]/10">
-          {experiences.map((exp, idx) => {
-            const isActive = activeIdx === idx;
+        <AnimatedGroup
+          className="max-w-4xl mx-auto flex flex-col gap-4 pt-4 w-full"
+          variants={groupVariants}
+        >
+          {experiences.map((exp) => {
+            const isActive = activeId === exp.id;
             return (
-              <div
-                key={exp.id}
-                onClick={() => setActiveIdx(idx)}
-                className="border-b border-[#243C2F]/10 py-8 text-left transition-colors duration-300 cursor-none select-none"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-baseline space-x-8">
-                    {/* Active Muted Gold Dot indicator */}
-                    <div className="w-4 flex items-center justify-center">
-                      {isActive ? (
-                        <motion.div
-                          layoutId="activeDot"
-                          className="w-2 h-2 rounded-full bg-[#C3B091]"
-                          transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-                        />
-                      ) : (
-                        <span className="text-[10px] text-[#79857B]/40 font-semibold">{exp.num}</span>
-                      )}
-                    </div>
-                    
-                    <h3 className={`font-heading text-2xl md:text-3xl font-light transition-colors duration-300 ${
-                      isActive ? 'text-[#1E221F] font-normal' : 'text-[#1E221F]/50'
-                    }`}>
-                      {exp.title}
-                    </h3>
+              <div key={exp.id} className="relative w-full group">
+                <GlowEffect
+                  colors={['#A6823C', '#C67B5C', '#1C3326', '#8B7BB3']}
+                  mode="static"
+                  blur="medium"
+                  scale={0.98}
+                  className="rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                />
+
+                <motion.div
+                  layout
+                  onClick={() => setActiveId(isActive ? null : exp.id)}
+                  className="relative bg-white border border-[#A6823C]/10 hover:border-[#A6823C]/35 p-6 md:p-8 rounded-3xl text-left flex flex-col justify-between transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer overflow-hidden"
+                  transition={{ type: 'spring', stiffness: 200, damping: 22 }}
+                >
+                {/* Soft hover glow aura */}
+                <div className="absolute -top-12 -right-12 w-24 h-24 bg-gradient-to-br from-[#A6823C]/10 via-[#1C3326]/5 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                <div className="space-y-4">
+                  <div className="flex justify-between items-start">
+                    <span className="font-body text-[11px] text-[#A6823C]/50 font-bold uppercase tracking-widest">{exp.num}</span>
+                    <span className="font-body text-[10px] uppercase tracking-widest text-[#4F5651]/40 group-hover:text-[#A6823C] transition-colors duration-300 font-semibold">
+                      {isActive ? 'Click to minimize' : 'Read details'}
+                    </span>
                   </div>
 
-                  <span className={`font-body text-[10px] uppercase tracking-widest transition-colors duration-300 ${
-                    isActive ? 'text-[#C3B091] font-bold' : 'text-[#79857B]/50'
-                  }`}>
-                    {isActive ? 'Active' : 'Details'}
-                  </span>
-                </div>
+                  <h3 className="font-heading text-2xl font-light text-[#0F1110] group-hover:text-[#A6823C] transition-colors duration-300">
+                    {exp.title}
+                  </h3>
 
-                {/* Expanding Content Panel */}
-                <AnimatePresence initial={false}>
-                  {isActive && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: 'easeInOut' }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pl-6 md:pl-12 pr-6 pt-6 pb-2 space-y-6 max-w-2xl">
-                        <p className="font-body text-sm md:text-base text-[#79857B] leading-relaxed font-light">
-                          {exp.desc}
-                        </p>
-                        <p className="font-body text-xs text-[#1E221F]/75 italic leading-relaxed border-t border-[#243C2F]/5 pt-4 font-light">
+                  <p className="font-body text-sm text-[#4F5651] leading-relaxed font-light">
+                    {exp.desc}
+                  </p>
+
+                  <AnimatePresence initial={false}>
+                    {isActive && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden border-t border-[#A6823C]/5 pt-4 mt-4 space-y-4"
+                      >
+                        <p className="font-body text-xs text-[#0F1110]/75 italic leading-relaxed font-light">
                           {exp.details}
                         </p>
-
-                        {/* Booking CTA Button Inside Service Drawer */}
-                        <div className="pt-4 text-left">
+                        
+                        <div className="pt-2">
                           <button
                             onClick={(e) => {
-                              e.stopPropagation(); // Prevents closing the drawer
+                              e.stopPropagation(); // Prevents toggle minimize
                               onBookService(exp.title);
                             }}
-                            className="px-6 py-2.5 border border-[#243C2F] text-[#243C2F] hover:bg-[#243C2F] hover:text-[#FDFBF7] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all duration-500 cursor-none"
+                            className="px-6 py-2.5 bg-[#1C3326] text-white hover:bg-[#A6823C] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-sm"
                           >
-                            Request this Consultation
+                            Request Consultation
                           </button>
                         </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            </div>
+          );
+        })}
+        </AnimatedGroup>
 
       </div>
     </section>

@@ -1,6 +1,32 @@
 import { useState, useEffect } from 'react';
-import type { FormEvent } from 'react';
+import type { FormEvent, ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { InView } from './core/in-view';
+import { GlowEffect } from './core/glow-effect';
+import { cn } from '@/lib/utils';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
 
 const methods = [
   { id: 'meet', name: 'Google Meet (Video Call)' },
@@ -16,6 +42,11 @@ const consultationTypes = [
   'Personal Growth',
   'Traditional Insight Sessions'
 ];
+
+const MaybeMotionDiv = ({ children, isModal }: { children: ReactNode; isModal: boolean }) => {
+  if (isModal) return <>{children}</>;
+  return <motion.div variants={itemVariants}>{children}</motion.div>;
+};
 
 interface BookingFormProps {
   isModal?: boolean;
@@ -55,49 +86,73 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
     }
   }, [defaultService]);
 
+  const [step, setStep] = useState(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Check if current consultation type is relational
   const isRelational = formData.type === 'Relationship Guidance' || formData.type === 'Marriage Guidance';
 
-  const validate = () => {
+  const validateStep = (stepNumber: number) => {
     const tempErrors: Record<string, string> = {};
-    if (!formData.name.trim()) tempErrors.name = 'Please provide your name';
-    if (!formData.contact.trim()) {
-      tempErrors.contact = 'Please provide your email';
-    } else if (!formData.contact.includes('@')) {
-      tempErrors.contact = 'Provide a valid email address';
+    if (stepNumber === 1) {
+      if (!formData.name.trim()) tempErrors.name = 'Please provide your name';
+      if (!formData.contact.trim()) {
+        tempErrors.contact = 'Please provide your email';
+      } else if (!formData.contact.includes('@')) {
+        tempErrors.contact = 'Provide a valid email address';
+      }
+      if (!formData.phone.trim()) tempErrors.phone = 'Please provide your mobile number';
     }
-    if (!formData.phone.trim()) tempErrors.phone = 'Please provide your mobile number';
-    if (!formData.type) tempErrors.type = 'Select a consultation type';
-    if (!formData.method) tempErrors.method = 'Select your preferred method';
-    if (!formData.date) tempErrors.date = 'Select preferred session date';
-    if (!formData.time) tempErrors.time = 'Select preferred session time slot';
+    if (stepNumber === 2) {
+      if (!formData.type) tempErrors.type = 'Select a consultation type';
+      if (!formData.method) tempErrors.method = 'Select your preferred method';
+      if (!formData.date) tempErrors.date = 'Select preferred session date';
+      if (!formData.time) tempErrors.time = 'Select preferred session time slot';
+    }
+    if (stepNumber === 3) {
+      if (!formData.birthDate) tempErrors.birthDate = 'Required';
+      if (!formData.birthTime) tempErrors.birthTime = 'Required';
+      if (!formData.birthPlace.trim()) tempErrors.birthPlace = 'Required';
+      if (!formData.gender) tempErrors.gender = 'Required';
 
-    // Birth Details Validation
-    if (!formData.birthDate) tempErrors.birthDate = 'Required';
-    if (!formData.birthTime) tempErrors.birthTime = 'Required';
-    if (!formData.birthPlace.trim()) tempErrors.birthPlace = 'Required';
-    if (!formData.gender) tempErrors.gender = 'Required';
-
-    // Partner Details Validation (Only if relational)
-    if (isRelational) {
-      if (!formData.partnerName.trim()) tempErrors.partnerName = 'Required';
-      if (!formData.partnerBirthDate) tempErrors.partnerBirthDate = 'Required';
-      if (!formData.partnerBirthTime) tempErrors.partnerBirthTime = 'Required';
-      if (!formData.partnerBirthPlace.trim()) tempErrors.partnerBirthPlace = 'Required';
-      if (!formData.partnerGender) tempErrors.partnerGender = 'Required';
+      if (isRelational) {
+        if (!formData.partnerName.trim()) tempErrors.partnerName = 'Required';
+        if (!formData.partnerBirthDate) tempErrors.partnerBirthDate = 'Required';
+        if (!formData.partnerBirthTime) tempErrors.partnerBirthTime = 'Required';
+        if (!formData.partnerBirthPlace.trim()) tempErrors.partnerBirthPlace = 'Required';
+        if (!formData.partnerGender) tempErrors.partnerGender = 'Required';
+      }
     }
 
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
 
+  const handleNextStep = () => {
+    if (validateStep(step)) {
+      setStep(prev => prev + 1);
+    }
+  };
+
+  const handlePrevStep = () => {
+    setStep(prev => Math.max(prev - 1, 1));
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (!validateStep(1)) {
+      setStep(1);
+      return;
+    }
+    if (!validateStep(2)) {
+      setStep(2);
+      return;
+    }
+    if (!validateStep(3)) {
+      setStep(3);
+      return;
+    }
 
     setIsSubmitting(true);
     try {
@@ -169,423 +224,510 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
       message: ''
     });
     setIsSubmitted(false);
+    setStep(1);
   };
 
   return (
-    <div className={`relative ${isModal ? '' : 'py-20 md:py-28 bg-[#FDFBF7] border-b border-[#243C2F]/10'}`} id="booking">
-      <div className={isModal ? 'w-full' : 'max-w-3xl mx-auto px-6 md:px-12 text-left'}>
-        
+    <div className={`relative ${isModal ? '' : 'py-14 md:py-18 bg-[#FAF8F5] border-b border-[#A6823C]/10'}`} id="booking">
+      <InView
+        variants={isModal ? undefined : containerVariants}
+        viewOptions={{ once: true, margin: '0px 0px -150px 0px' }}
+        className={isModal ? 'w-full' : 'max-w-3xl mx-auto px-6 md:px-12 text-left'}
+      >
         {!isModal && (
-          <div className="text-left mb-12 md:mb-16 max-w-xl">
-            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#79857B] font-semibold block mb-4">
+          <motion.div variants={itemVariants} className="text-left mb-12 md:mb-16 max-w-xl">
+            <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#4F5651] font-semibold block mb-4">
               Consultation
             </span>
-            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#1E221F] leading-tight">
+            <h2 className="font-heading text-4xl md:text-5xl font-light text-[#0F1110] leading-tight">
               Request a session.
             </h2>
-            <div className="w-12 h-[1px] bg-[#C3B091] mt-6 mb-8" />
-            <p className="font-body text-sm text-[#79857B] leading-relaxed font-light">
+            <div className="w-12 h-[1px] bg-[#A6823C] mt-6 mb-8" />
+            <p className="font-body text-sm text-[#4F5651] leading-relaxed font-light">
               Complete the form below to propose a consultation. We will reach back to confirm your session timing and coordinator.
             </p>
-          </div>
+          </motion.div>
         )}
 
-        <AnimatePresence mode="wait">
+        <MaybeMotionDiv isModal={isModal}>
+          <AnimatePresence mode="wait">
           {!isSubmitted ? (
             <motion.form
               key="booking-form"
               onSubmit={handleSubmit}
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="space-y-12"
+              className="space-y-10"
             >
-              
-              {/* SECTION: Contact Details */}
-              <div className="space-y-8">
-                <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
-                  1. Contact Information
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-                  <div className="flex flex-col">
-                    <label htmlFor="name" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => {
-                        setFormData({ ...formData, name: e.target.value });
-                        if (errors.name) setErrors({ ...errors, name: '' });
+              {/* Step Indicator Tracker Tabs */}
+              <div className="flex justify-between items-center mb-10 border-b border-[#A6823C]/10 pb-6">
+                {[
+                  { num: 1, label: 'Coordinates', desc: 'Contact' },
+                  { num: 2, label: 'Configuration', desc: 'Session' },
+                  { num: 3, label: 'Cosmic details', desc: 'Birth Chart' }
+                ].map((s) => {
+                  const isActive = step === s.num;
+                  const isCompleted = step > s.num;
+                  return (
+                    <button
+                      key={s.num}
+                      type="button"
+                      onClick={() => {
+                        if (s.num < step) setStep(s.num);
+                        else if (s.num > step) {
+                          if (s.num === 2 && validateStep(1)) setStep(2);
+                          else if (s.num === 3 && validateStep(1) && validateStep(2)) setStep(3);
+                        }
                       }}
-                      placeholder="Your name"
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                    />
-                    {errors.name && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.name}</span>}
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="contact" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="text"
-                      id="contact"
-                      value={formData.contact}
-                      onChange={(e) => {
-                        setFormData({ ...formData, contact: e.target.value });
-                        if (errors.contact) setErrors({ ...errors, contact: '' });
-                      }}
-                      placeholder="you@email.com"
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                    />
-                    {errors.contact && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.contact}</span>}
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="phone" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Mobile / WhatsApp *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      value={formData.phone}
-                      onChange={(e) => {
-                        setFormData({ ...formData, phone: e.target.value });
-                        if (errors.phone) setErrors({ ...errors, phone: '' });
-                      }}
-                      placeholder="+91 XXXXX XXXXX"
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                    />
-                    {errors.phone && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.phone}</span>}
-                  </div>
-                </div>
+                      className="flex items-center space-x-3 group focus:outline-none"
+                    >
+                      <span className={cn(
+                        "w-8 h-8 rounded-full border flex items-center justify-center text-xs font-semibold font-body transition-all duration-300",
+                        isActive && "bg-[#1C3326] text-white border-[#1C3326] scale-110 shadow-sm",
+                        isCompleted && "bg-[#A6823C]/10 text-[#A6823C] border-[#A6823C]/30",
+                        !isActive && !isCompleted && "bg-white text-[#4F5651]/50 border-[#A6823C]/15 group-hover:border-[#A6823C]/40"
+                      )}>
+                        {s.num}
+                      </span>
+                      <div className="hidden sm:block text-left">
+                        <span className={cn(
+                          "block text-[10px] uppercase tracking-widest font-semibold font-body transition-colors",
+                          isActive ? "text-[#0F1110]" : "text-[#4F5651]/60"
+                        )}>
+                          {s.label}
+                        </span>
+                        <span className="block text-[8px] text-[#4F5651]/40 uppercase tracking-widest font-light font-body -mt-0.5">
+                          {s.desc}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
 
-              {/* SECTION: Consultation Details */}
-              <div className="space-y-8">
-                <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
-                  2. Consultation Preferences
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-                  <div className="flex flex-col">
-                    <label htmlFor="type" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Consultation Type *
-                    </label>
-                    <select
-                      id="type"
-                      value={formData.type}
-                      onChange={(e) => {
-                        setFormData({ ...formData, type: e.target.value });
-                        if (errors.type) setErrors({ ...errors, type: '' });
-                      }}
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
-                    >
-                      <option value="" disabled className="bg-[#FDFBF7]">Select experience type</option>
-                      {consultationTypes.map((type) => (
-                        <option key={type} value={type} className="bg-[#FDFBF7]">{type}</option>
-                      ))}
-                    </select>
-                    {errors.type && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.type}</span>}
-                  </div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={step}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="space-y-10"
+                >
+                  {/* STEP 1: Personal Details */}
+                  {step === 1 && (
+                    <div className="space-y-8">
+                      <h4 className="font-heading text-xl text-[#0F1110] font-light border-b border-[#A6823C]/10 pb-2 text-left">
+                        1. Contact Information
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 text-left">
+                        {/* Name */}
+                        <div className="flex flex-col">
+                          <label htmlFor="name" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                            Name *
+                          </label>
+                          <input
+                            type="text"
+                            id="name"
+                            value={formData.name}
+                            onChange={(e) => {
+                              setFormData({ ...formData, name: e.target.value });
+                              if (errors.name) setErrors({ ...errors, name: '' });
+                            }}
+                            placeholder="Your name"
+                            className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110]"
+                          />
+                          {errors.name && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.name}</span>}
+                        </div>
 
-                  <div className="flex flex-col">
-                    <label htmlFor="method" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Method *
-                    </label>
-                    <select
-                      id="method"
-                      value={formData.method}
-                      onChange={(e) => {
-                        setFormData({ ...formData, method: e.target.value });
-                        if (errors.method) setErrors({ ...errors, method: '' });
-                      }}
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
-                    >
-                      <option value="" disabled className="bg-[#FDFBF7]">Select meet method</option>
-                      {methods.map((method) => (
-                        <option key={method.id} value={method.id} className="bg-[#FDFBF7]">{method.name}</option>
-                      ))}
-                    </select>
-                    {errors.method && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.method}</span>}
-                  </div>
-                </div>
+                        {/* Email */}
+                        <div className="flex flex-col">
+                          <label htmlFor="contact" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                            Email Address *
+                          </label>
+                          <input
+                            type="text"
+                            id="contact"
+                            value={formData.contact}
+                            onChange={(e) => {
+                              setFormData({ ...formData, contact: e.target.value });
+                              if (errors.contact) setErrors({ ...errors, contact: '' });
+                            }}
+                            placeholder="you@email.com"
+                            className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110]"
+                          />
+                          {errors.contact && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.contact}</span>}
+                        </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-                  <div className="flex flex-col">
-                    <label htmlFor="date" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Preferred Session Date *
-                    </label>
-                    <input
-                      type="date"
-                      id="date"
-                      value={formData.date}
-                      onChange={(e) => {
-                        setFormData({ ...formData, date: e.target.value });
-                        if (errors.date) setErrors({ ...errors, date: '' });
-                      }}
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
-                    />
-                    {errors.date && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.date}</span>}
-                  </div>
-
-                  <div className="flex flex-col">
-                    <label htmlFor="time" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Session Time Slot *
-                    </label>
-                    <select
-                      id="time"
-                      value={formData.time}
-                      onChange={(e) => {
-                        setFormData({ ...formData, time: e.target.value });
-                        if (errors.time) setErrors({ ...errors, time: '' });
-                      }}
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
-                    >
-                      <option value="" disabled className="bg-[#FDFBF7]">Select time slot</option>
-                      <option value="morning" className="bg-[#FDFBF7]">Morning (10:00 AM - 1:00 PM)</option>
-                      <option value="afternoon" className="bg-[#FDFBF7]">Afternoon (2:00 PM - 5:00 PM)</option>
-                      <option value="evening" className="bg-[#FDFBF7]">Evening (6:00 PM - 8:00 PM)</option>
-                    </select>
-                    {errors.time && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.time}</span>}
-                  </div>
-                </div>
-              </div>
-
-              {/* SECTION: Astrological Details */}
-              <div className="space-y-8">
-                <h4 className="font-heading text-xl text-[#1E221F] font-light border-b border-[#243C2F]/10 pb-2">
-                  3. Birth Details (for Chart Calculation)
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-10">
-                  
-                  {/* DOB */}
-                  <div className="flex flex-col">
-                    <label htmlFor="birthDate" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Date of Birth *
-                    </label>
-                    <input
-                      type="date"
-                      id="birthDate"
-                      value={formData.birthDate}
-                      onChange={(e) => {
-                        setFormData({ ...formData, birthDate: e.target.value });
-                        if (errors.birthDate) setErrors({ ...errors, birthDate: '' });
-                      }}
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
-                    />
-                    {errors.birthDate && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthDate}</span>}
-                  </div>
-
-                  {/* TOB */}
-                  <div className="flex flex-col">
-                    <label htmlFor="birthTime" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Exact Time of Birth *
-                    </label>
-                    <input
-                      type="text"
-                      id="birthTime"
-                      placeholder="e.g., 02:45 PM"
-                      value={formData.birthTime}
-                      onChange={(e) => {
-                        setFormData({ ...formData, birthTime: e.target.value });
-                        if (errors.birthTime) setErrors({ ...errors, birthTime: '' });
-                      }}
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                    />
-                    {errors.birthTime && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthTime}</span>}
-                  </div>
-
-                  {/* POB */}
-                  <div className="flex flex-col">
-                    <label htmlFor="birthPlace" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Place of Birth *
-                    </label>
-                    <input
-                      type="text"
-                      id="birthPlace"
-                      placeholder="City, Country"
-                      value={formData.birthPlace}
-                      onChange={(e) => {
-                        setFormData({ ...formData, birthPlace: e.target.value });
-                        if (errors.birthPlace) setErrors({ ...errors, birthPlace: '' });
-                      }}
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                    />
-                    {errors.birthPlace && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthPlace}</span>}
-                  </div>
-
-                  {/* Gender */}
-                  <div className="flex flex-col">
-                    <label htmlFor="gender" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                      Gender *
-                    </label>
-                    <select
-                      id="gender"
-                      value={formData.gender}
-                      onChange={(e) => {
-                        setFormData({ ...formData, gender: e.target.value });
-                        if (errors.gender) setErrors({ ...errors, gender: '' });
-                      }}
-                      className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
-                    >
-                      <option value="" disabled className="bg-[#FDFBF7]">Select</option>
-                      <option value="Male" className="bg-[#FDFBF7]">Male</option>
-                      <option value="Female" className="bg-[#FDFBF7]">Female</option>
-                      <option value="Non-binary" className="bg-[#FDFBF7]">Non-binary / Other</option>
-                    </select>
-                    {errors.gender && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.gender}</span>}
-                  </div>
-
-                </div>
-              </div>
-
-              {/* SECTION: Partner Birth Details (Conditional) */}
-              <AnimatePresence>
-                {isRelational && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.5, ease: 'easeInOut' }}
-                    className="overflow-hidden space-y-8"
-                  >
-                    <h4 className="font-heading text-xl text-[#C3B091] font-light border-b border-[#C3B091]/20 pb-2">
-                      4. Partner's Birth Details (for Compatibility Assessment)
-                    </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
-                      
-                      {/* Partner Name */}
-                      <div className="flex flex-col">
-                        <label htmlFor="partnerName" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                          Partner's Name *
-                        </label>
-                        <input
-                          type="text"
-                          id="partnerName"
-                          placeholder="Name"
-                          value={formData.partnerName}
-                          onChange={(e) => {
-                            setFormData({ ...formData, partnerName: e.target.value });
-                            if (errors.partnerName) setErrors({ ...errors, partnerName: '' });
-                          }}
-                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                        />
-                        {errors.partnerName && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerName}</span>}
+                        {/* Phone */}
+                        <div className="flex flex-col">
+                          <label htmlFor="phone" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                            Mobile / WhatsApp *
+                          </label>
+                          <input
+                            type="tel"
+                            id="phone"
+                            value={formData.phone}
+                            onChange={(e) => {
+                              setFormData({ ...formData, phone: e.target.value });
+                              if (errors.phone) setErrors({ ...errors, phone: '' });
+                            }}
+                            placeholder="+91 XXXXX XXXXX"
+                            className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110]"
+                          />
+                          {errors.phone && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.phone}</span>}
+                        </div>
                       </div>
-
-                      {/* Partner DOB */}
-                      <div className="flex flex-col">
-                        <label htmlFor="partnerBirthDate" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                          Date of Birth *
-                        </label>
-                        <input
-                          type="date"
-                          id="partnerBirthDate"
-                          value={formData.partnerBirthDate}
-                          onChange={(e) => {
-                            setFormData({ ...formData, partnerBirthDate: e.target.value });
-                            if (errors.partnerBirthDate) setErrors({ ...errors, partnerBirthDate: '' });
-                          }}
-                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
-                        />
-                        {errors.partnerBirthDate && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthDate}</span>}
-                      </div>
-
-                      {/* Partner TOB */}
-                      <div className="flex flex-col">
-                        <label htmlFor="partnerBirthTime" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                          Birth Time *
-                        </label>
-                        <input
-                          type="text"
-                          id="partnerBirthTime"
-                          placeholder="e.g. 10:15 AM"
-                          value={formData.partnerBirthTime}
-                          onChange={(e) => {
-                            setFormData({ ...formData, partnerBirthTime: e.target.value });
-                            if (errors.partnerBirthTime) setErrors({ ...errors, partnerBirthTime: '' });
-                          }}
-                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                        />
-                        {errors.partnerBirthTime && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthTime}</span>}
-                      </div>
-
-                      {/* Partner POB */}
-                      <div className="flex flex-col">
-                        <label htmlFor="partnerBirthPlace" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                          Birth Place *
-                        </label>
-                        <input
-                          type="text"
-                          id="partnerBirthPlace"
-                          placeholder="City, Country"
-                          value={formData.partnerBirthPlace}
-                          onChange={(e) => {
-                            setFormData({ ...formData, partnerBirthPlace: e.target.value });
-                            if (errors.partnerBirthPlace) setErrors({ ...errors, partnerBirthPlace: '' });
-                          }}
-                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                        />
-                        {errors.partnerBirthPlace && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthPlace}</span>}
-                      </div>
-
-                      {/* Partner Gender */}
-                      <div className="flex flex-col">
-                        <label htmlFor="partnerGender" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                          Gender *
-                        </label>
-                        <select
-                          id="partnerGender"
-                          value={formData.partnerGender}
-                          onChange={(e) => {
-                            setFormData({ ...formData, partnerGender: e.target.value });
-                            if (errors.partnerGender) setErrors({ ...errors, partnerGender: '' });
-                          }}
-                          className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors text-[#1E221F]"
-                        >
-                          <option value="" disabled className="bg-[#FDFBF7]">Select</option>
-                          <option value="Male" className="bg-[#FDFBF7]">Male</option>
-                          <option value="Female" className="bg-[#FDFBF7]">Female</option>
-                          <option value="Non-binary" className="bg-[#FDFBF7]">Non-binary / Other</option>
-                        </select>
-                        {errors.partnerGender && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerGender}</span>}
-                      </div>
-
                     </div>
-                  </motion.div>
-                )}
+                  )}
+
+                  {/* STEP 2: Session Configuration */}
+                  {step === 2 && (
+                    <div className="space-y-8">
+                      <h4 className="font-heading text-xl text-[#0F1110] font-light border-b border-[#A6823C]/10 pb-2 text-left">
+                        2. Consultation Preferences
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 text-left">
+                        {/* Consultation Type */}
+                        <div className="flex flex-col">
+                          <label htmlFor="type" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                            Consultation Type *
+                          </label>
+                          <select
+                            id="type"
+                            value={formData.type}
+                            onChange={(e) => {
+                              setFormData({ ...formData, type: e.target.value });
+                              if (errors.type) setErrors({ ...errors, type: '' });
+                            }}
+                            className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                          >
+                            <option value="" disabled className="bg-[#FAF8F5]">Select type</option>
+                            {consultationTypes.map((t) => (
+                              <option key={t} value={t} className="bg-[#FAF8F5]">{t}</option>
+                            ))}
+                          </select>
+                          {errors.type && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.type}</span>}
+                        </div>
+
+                        {/* Method */}
+                        <div className="flex flex-col">
+                          <label htmlFor="method" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                            Session Method *
+                          </label>
+                          <select
+                            id="method"
+                            value={formData.method}
+                            onChange={(e) => {
+                              setFormData({ ...formData, method: e.target.value });
+                              if (errors.method) setErrors({ ...errors, method: '' });
+                            }}
+                            className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                          >
+                            <option value="" disabled className="bg-[#FAF8F5]">Select method</option>
+                            {methods.map((m) => (
+                              <option key={m.id} value={m.name} className="bg-[#FAF8F5]">{m.name}</option>
+                            ))}
+                          </select>
+                          {errors.method && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.method}</span>}
+                        </div>
+
+                        {/* Date */}
+                        <div className="flex flex-col">
+                          <label htmlFor="date" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                            Preferred Date *
+                          </label>
+                          <input
+                            type="date"
+                            id="date"
+                            value={formData.date}
+                            onChange={(e) => {
+                              setFormData({ ...formData, date: e.target.value });
+                              if (errors.date) setErrors({ ...errors, date: '' });
+                            }}
+                            className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                          />
+                          {errors.date && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.date}</span>}
+                        </div>
+
+                        {/* Time Slot */}
+                        <div className="flex flex-col">
+                          <label htmlFor="time" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                            Preferred Time Slot *
+                          </label>
+                          <select
+                            id="time"
+                            value={formData.time}
+                            onChange={(e) => {
+                              setFormData({ ...formData, time: e.target.value });
+                              if (errors.time) setErrors({ ...errors, time: '' });
+                            }}
+                            className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                          >
+                            <option value="" disabled className="bg-[#FAF8F5]">Select slot</option>
+                            <option value="Morning (10:00 AM — 01:00 PM)" className="bg-[#FAF8F5]">Morning (10:00 AM — 01:00 PM)</option>
+                            <option value="Afternoon (01:00 PM — 04:00 PM)" className="bg-[#FAF8F5]">Afternoon (01:00 PM — 04:00 PM)</option>
+                            <option value="Evening (04:00 PM — 08:00 PM)" className="bg-[#FAF8F5]">Evening (04:00 PM — 08:00 PM)</option>
+                          </select>
+                          {errors.time && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.time}</span>}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* STEP 3: Cosmic Coordinates */}
+                  {step === 3 && (
+                    <div className="space-y-8">
+                      <div className="space-y-8">
+                        <h4 className="font-heading text-xl text-[#0F1110] font-light border-b border-[#A6823C]/10 pb-2 text-left">
+                          3. Cosmic Coordinates
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-left">
+                          {/* Birth Date */}
+                          <div className="flex flex-col">
+                            <label htmlFor="birthDate" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                              Date of Birth *
+                            </label>
+                            <input
+                              type="date"
+                              id="birthDate"
+                              value={formData.birthDate}
+                              onChange={(e) => {
+                                setFormData({ ...formData, birthDate: e.target.value });
+                                if (errors.birthDate) setErrors({ ...errors, birthDate: '' });
+                              }}
+                              className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                            />
+                            {errors.birthDate && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthDate}</span>}
+                          </div>
+
+                          {/* Birth Time */}
+                          <div className="flex flex-col">
+                            <label htmlFor="birthTime" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                              Time of Birth *
+                            </label>
+                            <input
+                              type="time"
+                              id="birthTime"
+                              value={formData.birthTime}
+                              onChange={(e) => {
+                                setFormData({ ...formData, birthTime: e.target.value });
+                                if (errors.birthTime) setErrors({ ...errors, birthTime: '' });
+                              }}
+                              className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                            />
+                            {errors.birthTime && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthTime}</span>}
+                          </div>
+
+                          {/* Birth Place */}
+                          <div className="flex flex-col">
+                            <label htmlFor="birthPlace" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                              Place of Birth *
+                            </label>
+                            <input
+                              type="text"
+                              id="birthPlace"
+                              placeholder="City, Country"
+                              value={formData.birthPlace}
+                              onChange={(e) => {
+                                setFormData({ ...formData, birthPlace: e.target.value });
+                                if (errors.birthPlace) setErrors({ ...errors, birthPlace: '' });
+                              }}
+                              className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110]"
+                            />
+                            {errors.birthPlace && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.birthPlace}</span>}
+                          </div>
+
+                          {/* Gender */}
+                          <div className="flex flex-col">
+                            <label htmlFor="gender" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                              Gender *
+                            </label>
+                            <select
+                              id="gender"
+                              value={formData.gender}
+                              onChange={(e) => {
+                                setFormData({ ...formData, gender: e.target.value });
+                                if (errors.gender) setErrors({ ...errors, gender: '' });
+                              }}
+                              className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                            >
+                              <option value="" disabled className="bg-[#FAF8F5]">Select</option>
+                              <option value="Male" className="bg-[#FAF8F5]">Male</option>
+                              <option value="Female" className="bg-[#FAF8F5]">Female</option>
+                              <option value="Non-binary" className="bg-[#FAF8F5]">Non-binary / Other</option>
+                            </select>
+                            {errors.gender && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.gender}</span>}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Partner details (if relational) */}
+                      {isRelational && (
+                        <div className="space-y-8 pt-4">
+                          <h4 className="font-heading text-xl text-[#0F1110] font-light border-b border-[#A6823C]/10 pb-2 text-left">
+                            Partner's Cosmic Coordinates
+                          </h4>
+                          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-left">
+                            <div className="flex flex-col md:col-span-2">
+                              <label htmlFor="partnerName" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                                Partner's Name *
+                              </label>
+                              <input
+                                type="text"
+                                id="partnerName"
+                                placeholder="Partner's name"
+                                value={formData.partnerName}
+                                onChange={(e) => {
+                                  setFormData({ ...formData, partnerName: e.target.value });
+                                  if (errors.partnerName) setErrors({ ...errors, partnerName: '' });
+                                }}
+                                className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110]"
+                              />
+                              {errors.partnerName && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerName}</span>}
+                            </div>
+
+                            <div className="flex flex-col">
+                              <label htmlFor="partnerBirthDate" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                                Date of Birth *
+                              </label>
+                              <input
+                                type="date"
+                                id="partnerBirthDate"
+                                value={formData.partnerBirthDate}
+                                onChange={(e) => {
+                                  setFormData({ ...formData, partnerBirthDate: e.target.value });
+                                  if (errors.partnerBirthDate) setErrors({ ...errors, partnerBirthDate: '' });
+                                }}
+                                className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                              />
+                              {errors.partnerBirthDate && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthDate}</span>}
+                            </div>
+
+                            <div className="flex flex-col">
+                              <label htmlFor="partnerBirthTime" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                                Time of Birth *
+                              </label>
+                              <input
+                                type="time"
+                                id="partnerBirthTime"
+                                value={formData.partnerBirthTime}
+                                onChange={(e) => {
+                                  setFormData({ ...formData, partnerBirthTime: e.target.value });
+                                  if (errors.partnerBirthTime) setErrors({ ...errors, partnerBirthTime: '' });
+                                }}
+                                className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                              />
+                              {errors.partnerBirthTime && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthTime}</span>}
+                            </div>
+
+                            <div className="flex flex-col">
+                              <label htmlFor="partnerBirthPlace" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                                Place of Birth *
+                              </label>
+                              <input
+                                type="text"
+                                id="partnerBirthPlace"
+                                placeholder="City, Country"
+                                value={formData.partnerBirthPlace}
+                                onChange={(e) => {
+                                  setFormData({ ...formData, partnerBirthPlace: e.target.value });
+                                  if (errors.partnerBirthPlace) setErrors({ ...errors, partnerBirthPlace: '' });
+                                }}
+                                className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110]"
+                              />
+                              {errors.partnerBirthPlace && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerBirthPlace}</span>}
+                            </div>
+
+                            <div className="flex flex-col">
+                              <label htmlFor="partnerGender" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                                Gender *
+                              </label>
+                              <select
+                                id="partnerGender"
+                                value={formData.partnerGender}
+                                onChange={(e) => {
+                                  setFormData({ ...formData, partnerGender: e.target.value });
+                                  if (errors.partnerGender) setErrors({ ...errors, partnerGender: '' });
+                                }}
+                                className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors text-[#0F1110]"
+                              >
+                                <option value="" disabled className="bg-[#FAF8F5]">Select</option>
+                                <option value="Male" className="bg-[#FAF8F5]">Male</option>
+                                <option value="Female" className="bg-[#FAF8F5]">Female</option>
+                                <option value="Non-binary" className="bg-[#FAF8F5]">Non-binary / Other</option>
+                              </select>
+                              {errors.partnerGender && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.partnerGender}</span>}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Additional Notes or Questions */}
+                      <div className="flex flex-col text-left">
+                        <label htmlFor="message" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                          Additional Notes or Questions
+                        </label>
+                        <textarea
+                          id="message"
+                          value={formData.message}
+                          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                          placeholder="Share any specific context or questions you want addressed..."
+                          rows={3}
+                          className="py-3 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110] resize-none"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
               </AnimatePresence>
 
-              {/* Message & Context */}
-              <div className="flex flex-col">
-                <label htmlFor="message" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                  Additional Notes or Questions
-                </label>
-                <textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Share any specific context or questions you want addressed..."
-                  rows={3}
-                  className="py-3 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F] resize-none"
-                />
-              </div>
-
               {errors.submit && (
-                <div className="text-red-500 text-xs font-semibold uppercase tracking-wider mb-4">
+                <div className="text-red-500 text-xs font-semibold uppercase tracking-wider mb-4 text-left">
                   {errors.submit}
                 </div>
               )}
 
-              <div className="pt-8 text-left">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="px-10 py-3.5 border border-[#243C2F] text-[#243C2F] rounded-full font-body text-xs uppercase tracking-widest font-semibold hover:bg-[#243C2F] hover:text-[#FDFBF7] transition-all duration-500 focus:outline-none disabled:opacity-50 cursor-none"
-                >
-                  {isSubmitting ? 'Submitting Details...' : 'Submit Request'}
-                </button>
+              {/* Navigation Action Buttons */}
+              <div className="flex justify-between items-center pt-8 border-t border-[#A6823C]/10 mt-10">
+                {step > 1 ? (
+                  <button
+                    type="button"
+                    onClick={handlePrevStep}
+                    className="px-6 py-2.5 border border-[#A6823C]/20 text-[#4F5651] hover:border-[#A6823C] hover:text-[#0F1110] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all focus:outline-none"
+                  >
+                    Back
+                  </button>
+                ) : (
+                  <div />
+                )}
+
+                {step < 3 ? (
+                  <button
+                    type="button"
+                    onClick={handleNextStep}
+                    className="px-8 py-3 bg-[#1C3326] text-white hover:bg-[#A6823C] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all duration-300 focus:outline-none"
+                  >
+                    Continue
+                  </button>
+                ) : (
+                  <div className="relative inline-block group">
+                    <GlowEffect
+                      colors={['#A6823C', '#C67B5C', '#1C3326', '#8B7BB3']}
+                      mode="colorShift"
+                      blur="soft"
+                      duration={4}
+                      scale={0.92}
+                    />
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="relative inline-flex items-center gap-2 rounded-full bg-[#1C3326] px-8 py-3.5 text-xs uppercase tracking-widest font-semibold text-white transition-all duration-300 hover:bg-[#A6823C] shadow-md disabled:opacity-50"
+                    >
+                      {isSubmitting ? 'Submitting Details...' : 'Submit Session Request'}
+                    </button>
+                  </div>
+                )}
               </div>
             </motion.form>
           ) : (
@@ -595,23 +737,23 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
               animate={{ opacity: 1, scale: 1 }}
               className="py-12 text-left space-y-6"
             >
-              <h3 className="font-heading text-3xl font-light text-[#1E221F]">
+              <h3 className="font-heading text-3xl font-light text-[#0F1110]">
                 Session request received.
               </h3>
-              <p className="font-body text-sm text-[#79857B] leading-relaxed font-light max-w-lg">
+              <p className="font-body text-sm text-[#4F5651] leading-relaxed font-light max-w-lg">
                 Thank you for sharing your alignment details. Your data has been securely forwarded. Our coordinator will review your chart timeline options and reach back within 24 to 48 hours to confirm.
               </p>
               <div className="flex space-x-6 pt-4">
                 <button
                   onClick={handleReset}
-                  className="px-6 py-2.5 border border-[#243C2F]/20 text-[#79857B] hover:border-[#243C2F] hover:text-[#1E221F] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all cursor-none"
+                  className="px-6 py-2.5 border border-[#A6823C]/20 text-[#4F5651] hover:border-[#A6823C] hover:text-[#0F1110] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all "
                 >
                   New Booking
                 </button>
                 {isModal && onClose && (
                   <button
                     onClick={onClose}
-                    className="px-6 py-2.5 bg-[#243C2F] text-[#FDFBF7] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all cursor-none"
+                    className="px-6 py-2.5 bg-[#A6823C] text-[#FAF8F5] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all "
                   >
                     Close Window
                   </button>
@@ -620,7 +762,8 @@ const BookingForm = ({ isModal = false, onClose, defaultService }: BookingFormPr
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </MaybeMotionDiv>
+      </InView>
     </div>
   );
 };

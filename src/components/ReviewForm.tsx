@@ -1,6 +1,31 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { InView } from './core/in-view';
+import { GlowEffect } from './core/glow-effect';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  },
+};
 
 const ReviewForm = () => {
   const [formData, setFormData] = useState({
@@ -63,124 +88,169 @@ const ReviewForm = () => {
   };
 
   return (
-    <section className="py-16 md:py-20 bg-[#FDFBF7] relative z-10 border-b border-[#243C2F]/10">
-      <div className="max-w-2xl mx-auto px-6 md:px-12">
-        
-        <div className="text-left mb-8 md:mb-12">
-          <h4 className="font-heading text-3xl font-light text-[#1E221F] mb-2">
-            Share your experience
-          </h4>
-          <p className="font-body text-xs text-[#79857B] leading-relaxed">
-            Your reflections help us refine our guidance. Submitted feedback is routed to our private practice coordinators.
-          </p>
-        </div>
+    <section className="py-16 md:py-20 bg-[#FAF8F5] relative z-10 border-b border-[#A6823C]/10">
+      <InView
+        variants={containerVariants}
+        viewOptions={{ once: true, margin: '0px 0px -150px 0px' }}
+        className="max-w-6xl mx-auto px-6 md:px-12"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left Column: Premium Constellation Callout */}
+          <motion.div 
+            variants={itemVariants} 
+            className="lg:col-span-5 text-left bg-[#1C3326] text-white p-8 md:p-10 rounded-3xl relative overflow-hidden flex flex-col justify-between min-h-[350px] shadow-lg"
+          >
+            {/* Constellation Star nodes in card */}
+            <div className="absolute top-3 left-3 w-1.5 h-1.5 bg-[#A6823C] rounded-full shadow-[0_0_8px_#A6823C]" />
+            <div className="absolute top-3 right-3 w-1.5 h-1.5 bg-[#A6823C] rounded-full shadow-[0_0_8px_#A6823C]" />
+            <div className="absolute bottom-3 left-3 w-1.5 h-1.5 bg-[#A6823C] rounded-full shadow-[0_0_8px_#A6823C]" />
+            <div className="absolute bottom-3 right-3 w-1.5 h-1.5 bg-[#A6823C] rounded-full shadow-[0_0_8px_#A6823C]" />
+            
+            <div className="absolute inset-0 opacity-[0.03]" style={{
+              backgroundImage: 'radial-gradient(#FAF8F5 1.5px, transparent 1.5px)',
+              backgroundSize: '20px 20px'
+            }} />
 
-        <AnimatePresence mode="wait">
-          {!isSubmitted ? (
-            <motion.form
-              key="review-form"
-              onSubmit={handleSubmit}
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-8 text-left"
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {/* Name */}
-                <div className="flex flex-col">
-                  <label htmlFor="review-name" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                    Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="review-name"
-                    value={formData.name}
-                    onChange={(e) => {
-                      setFormData({ ...formData, name: e.target.value });
-                      if (errors.name) setErrors({ ...errors, name: '' });
-                    }}
-                    placeholder="Your name"
-                    className="py-2.5 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                  />
-                  {errors.name && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.name}</span>}
-                </div>
+            <div>
+              <span className="font-body text-[10px] uppercase tracking-[0.25em] text-[#A6823C] font-semibold block mb-4">
+                Community Journal
+              </span>
+              <h4 className="font-heading text-3xl md:text-4xl font-light text-white leading-tight">
+                Share your journey.
+              </h4>
+            </div>
 
-                {/* Location/Role */}
-                <div className="flex flex-col">
-                  <label htmlFor="review-role" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                    Location or Profession
-                  </label>
-                  <input
-                    type="text"
-                    id="review-role"
-                    value={formData.role}
-                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                    placeholder="e.g., Designer"
-                    className="py-2.5 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F]"
-                  />
-                </div>
-              </div>
-
-              {/* Review text */}
-              <div className="flex flex-col">
-                <label htmlFor="review-content" className="font-body text-[10px] uppercase tracking-widest text-[#79857B] font-semibold mb-2">
-                  Reflection *
-                </label>
-                <textarea
-                  id="review-content"
-                  value={formData.review}
-                  onChange={(e) => {
-                    setFormData({ ...formData, review: e.target.value });
-                    if (errors.review) setErrors({ ...errors, review: '' });
-                  }}
-                  placeholder="Write your honest experience about the session..."
-                  rows={3}
-                  className="py-2.5 border-b border-[#243C2F]/30 focus:border-[#243C2F] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#79857B]/40 text-[#1E221F] resize-none"
-                />
-                {errors.review && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.review}</span>}
-              </div>
-
-              {errors.submit && (
-                <div className="text-red-500 text-xs font-semibold uppercase tracking-wider">
-                  {errors.submit}
-                </div>
-              )}
-
-              <div className="text-left pt-4">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="px-8 py-3 border border-[#243C2F] text-[#243C2F] rounded-full font-body text-xs uppercase tracking-widest font-semibold hover:bg-[#243C2F] hover:text-[#FDFBF7] transition-all duration-500 focus:outline-none disabled:opacity-50 cursor-none"
-                >
-                  {isSubmitting ? 'Sending Reflection...' : 'Submit Reflection'}
-                </button>
-              </div>
-            </motion.form>
-          ) : (
-            <motion.div
-              key="review-success"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="py-6 text-left space-y-4"
-            >
-              <h5 className="font-heading text-2xl font-light text-[#1E221F]">
-                Reflection submitted.
-              </h5>
-              <p className="font-body text-sm text-[#79857B] leading-relaxed font-light">
-                Thank you for sharing your experience. Your reflection has been forwarded to our practice email. We review all feedback to maintain quality and update our customer reviews section.
+            <div className="mt-8 relative z-10">
+              <p className="font-body text-sm text-white/80 leading-relaxed font-light italic">
+                "Your reflections help calibrate our guidance, creating coordinate points that illuminate paths of self-alignment for others."
               </p>
-              <div className="pt-2">
-                <button
-                  onClick={handleReset}
-                  className="px-6 py-2 border border-[#243C2F]/20 text-[#79857B] hover:border-[#243C2F] hover:text-[#1E221F] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all cursor-none"
-                >
-                  Submit Another
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              <div className="w-12 h-[1px] bg-[#A6823C] mt-6" />
+            </div>
+          </motion.div>
 
-      </div>
+          {/* Right Column: Clean Floating Form Card */}
+          <motion.div 
+            variants={itemVariants} 
+            className="lg:col-span-7 bg-white p-8 md:p-10 border border-[#A6823C]/10 rounded-3xl shadow-sm text-left relative overflow-hidden"
+          >
+            <AnimatePresence mode="wait">
+              {!isSubmitted ? (
+                <motion.form
+                  key="review-form"
+                  onSubmit={handleSubmit}
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="space-y-8 text-left"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    {/* Name */}
+                    <div className="flex flex-col">
+                      <label htmlFor="review-name" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                        Name *
+                      </label>
+                      <input
+                        type="text"
+                        id="review-name"
+                        value={formData.name}
+                        onChange={(e) => {
+                          setFormData({ ...formData, name: e.target.value });
+                          if (errors.name) setErrors({ ...errors, name: '' });
+                        }}
+                        placeholder="Your name"
+                        className="py-2.5 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110]"
+                      />
+                      {errors.name && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.name}</span>}
+                    </div>
+
+                    {/* Location/Role */}
+                    <div className="flex flex-col">
+                      <label htmlFor="review-role" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                        Location or Profession
+                      </label>
+                      <input
+                        type="text"
+                        id="review-role"
+                        value={formData.role}
+                        onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                        placeholder="e.g., Varanasi"
+                        className="py-2.5 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Review text */}
+                  <div className="flex flex-col">
+                    <label htmlFor="review-content" className="font-body text-[10px] uppercase tracking-widest text-[#4F5651] font-semibold mb-2">
+                      Reflection *
+                    </label>
+                    <textarea
+                      id="review-content"
+                      value={formData.review}
+                      onChange={(e) => {
+                        setFormData({ ...formData, review: e.target.value });
+                        if (errors.review) setErrors({ ...errors, review: '' });
+                      }}
+                      placeholder="Write your honest experience about the session..."
+                      rows={3}
+                      className="py-2.5 border-b border-[#A6823C]/30 focus:border-[#A6823C] bg-transparent text-sm focus:outline-none transition-colors placeholder:text-[#4F5651]/40 text-[#0F1110] resize-none"
+                    />
+                    {errors.review && <span className="text-red-500 text-[10px] mt-1 uppercase tracking-wider">{errors.review}</span>}
+                  </div>
+
+                  {errors.submit && (
+                    <div className="text-red-500 text-xs font-semibold uppercase tracking-wider">
+                      {errors.submit}
+                    </div>
+                  )}
+
+                  <div className="text-left pt-4">
+                    <div className="relative inline-block group">
+                      <GlowEffect
+                        colors={['#A6823C', '#C67B5C', '#1C3326', '#8B7BB3']}
+                        mode="colorShift"
+                        blur="soft"
+                        duration={4}
+                        scale={0.92}
+                      />
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="relative inline-flex items-center gap-2 rounded-full bg-[#1C3326] px-8 py-3.5 text-xs uppercase tracking-widest font-semibold text-white transition-all duration-300 hover:bg-[#A6823C] shadow-md disabled:opacity-50"
+                      >
+                        {isSubmitting ? 'Sending Reflection...' : 'Submit Reflection'}
+                      </button>
+                    </div>
+                  </div>
+                </motion.form>
+              ) : (
+                <motion.div
+                  key="review-success"
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="py-6 text-left space-y-4"
+                >
+                  <h5 className="font-heading text-2xl font-light text-[#0F1110]">
+                    Reflection submitted.
+                  </h5>
+                  <p className="font-body text-sm text-[#4F5651] leading-relaxed font-light">
+                    Thank you for sharing your experience. Your reflection has been forwarded to our coordinators.
+                  </p>
+                  <div className="pt-2">
+                    <button
+                      onClick={handleReset}
+                      className="px-6 py-2.5 border border-[#A6823C]/20 text-[#4F5651] hover:border-[#A6823C] hover:text-[#0F1110] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all"
+                    >
+                      Submit Another
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+        </div>
+      </InView>
     </section>
   );
 };
