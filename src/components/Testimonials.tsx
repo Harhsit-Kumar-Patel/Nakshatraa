@@ -96,6 +96,24 @@ const testimonials = [
     name: "Shalini Singh",
     role: "Varanasi",
     quote: "I had a wonderful experience with this consultation. The session was friendly, patient, and explained everything in a simple and easy-to-understand way. The advice was honest, helpful, and gave me a lot of confidence. I highly recommend this service."
+  },
+  {
+   id: 12,
+    name: "Aishwarya Gupta",
+    role: "Noida",
+    quote: "had an amazing experience . I usually don't trust astrology services easily, but after taking a consultation from you, my perspective completely changed. The way you explained my horoscope, personality traits, and current life situations felt extremely accurate and personal. Thank you 😊"
+  }, 
+  {
+    id: 13,
+    name: "Mohit Kumar",
+    role: "Noida",
+    quote: "I was feeling completely confused about my career and future. The counseling session at Nakshatraa gave me much-needed clarity and confidence. The guidance wasn't based only on astrology—it was practical, thoughtful, and easy to understand. Every prediction and suggestion was explained patiently, and I left the session feeling positive and hopeful. Thank you for such a genuine experience!"
+  },
+  {
+    id: 14,
+    name: "Divya Mishra",
+    role: "Noida",
+    quote: "I booked a consultation to understand some personal challenges I was facing, and I'm really glad I did. The session was calm, respectful, and insightful. Instead of creating fear, the counselor focused on solutions and explained my birth chart in simple language. I felt heard, supported, and more confident about the decisions ahead. I would definitely recommend Nakshatraa to anyone looking for honest guidance and counseling."
   }
 ];
 
