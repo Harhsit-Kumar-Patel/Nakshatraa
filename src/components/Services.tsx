@@ -89,22 +89,22 @@ const Services = ({ onBookService }: ServicesProps) => {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
-    <section id="experiences" className="py-16 md:py-20 bg-[#FAF8F5] relative z-10 border-b border-[#A6823C]/10 overflow-hidden">
+    <section id="experiences" className="py-16 md:py-20 bg-[#030510] text-[#F8F7F4] relative z-10 border-b border-[#D4AF37]/10 overflow-hidden">
       
       {/* Background Soft Glow */}
-      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#A6823C]/5 via-[#1C3326]/3 to-transparent rounded-full blur-[100px] pointer-events-none animate-pulse-glow" />
+      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#1B1035]/20 via-[#2A1B4A]/10 to-transparent rounded-full blur-[100px] pointer-events-none animate-pulse-glow" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Header */}
         <div className="text-left mb-12 md:mb-16 max-w-2xl">
-          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#4F5651] font-semibold block mb-4">
+          <span className="font-body text-[10px] uppercase tracking-[0.2em] text-[#B8B5C4] font-semibold block mb-4">
             Experiences
           </span>
-          <h2 className="font-heading text-4xl md:text-5xl font-light text-[#0F1110] leading-tight">
+          <h2 className="font-heading text-4xl md:text-5xl font-light text-[#F8F7F4] leading-tight tracking-[0.02em]">
             Consultations designed for clarity.
           </h2>
-          <div className="w-12 h-[1px] bg-[#A6823C] mt-6" />
+          <div className="w-12 h-[1px] bg-[#D4AF37] mt-6" />
         </div>
 
         <AnimatedGroup
@@ -116,7 +116,7 @@ const Services = ({ onBookService }: ServicesProps) => {
             return (
               <div key={exp.id} className="relative w-full group">
                 <GlowEffect
-                  colors={['#A6823C', '#C67B5C', '#1C3326', '#8B7BB3']}
+                  colors={['#D4AF37', '#8B7BB3', '#C67B5C', '#1B1035']}
                   mode="static"
                   blur="medium"
                   scale={0.98}
@@ -126,25 +126,25 @@ const Services = ({ onBookService }: ServicesProps) => {
                 <motion.div
                   layout
                   onClick={() => setActiveId(isActive ? null : exp.id)}
-                  className="relative bg-white border border-[#A6823C]/10 hover:border-[#A6823C]/35 p-6 md:p-8 rounded-3xl text-left flex flex-col justify-between transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer overflow-hidden"
+                  className="relative bg-[#0A0E1F]/60 border border-[#D4AF37]/10 hover:border-[#D4AF37]/35 p-6 md:p-8 rounded-3xl text-left flex flex-col justify-between transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer overflow-hidden backdrop-blur-sm"
                   transition={{ type: 'spring', stiffness: 200, damping: 22 }}
                 >
                 {/* Soft hover glow aura */}
-                <div className="absolute -top-12 -right-12 w-24 h-24 bg-gradient-to-br from-[#A6823C]/10 via-[#1C3326]/5 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute -top-12 -right-12 w-24 h-24 bg-gradient-to-br from-[#D4AF37]/10 via-[#8B7BB3]/5 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                 <div className="space-y-4">
                   <div className="flex justify-between items-start">
-                    <span className="font-body text-[11px] text-[#A6823C]/50 font-bold uppercase tracking-widest">{exp.num}</span>
-                    <span className="font-body text-[10px] uppercase tracking-widest text-[#4F5651]/40 group-hover:text-[#A6823C] transition-colors duration-300 font-semibold">
+                    <span className="font-body text-[11px] text-[#D4AF37]/65 font-bold uppercase tracking-widest">{exp.num}</span>
+                    <span className="font-body text-[10px] uppercase tracking-widest text-[#B8B5C4]/50 group-hover:text-[#D4AF37] transition-colors duration-300 font-semibold">
                       {isActive ? 'Click to minimize' : 'Read details'}
                     </span>
                   </div>
 
-                  <h3 className="font-heading text-2xl font-light text-[#0F1110] group-hover:text-[#A6823C] transition-colors duration-300">
+                  <h3 className="font-heading text-2xl font-light text-[#F8F7F4] group-hover:text-[#D4AF37] transition-colors duration-300 tracking-[0.02em]">
                     {exp.title}
                   </h3>
 
-                  <p className="font-body text-sm text-[#4F5651] leading-relaxed font-light">
+                  <p className="font-body text-sm text-[#B8B5C4] leading-relaxed font-light">
                     {exp.desc}
                   </p>
 
@@ -155,9 +155,9 @@ const Services = ({ onBookService }: ServicesProps) => {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="overflow-hidden border-t border-[#A6823C]/5 pt-4 mt-4 space-y-4"
+                        className="overflow-hidden border-t border-[#D4AF37]/10 pt-4 mt-4 space-y-4"
                       >
-                        <p className="font-body text-xs text-[#0F1110]/75 italic leading-relaxed font-light">
+                        <p className="font-body text-xs text-[#F5F3EF] leading-relaxed font-light">
                           {exp.details}
                         </p>
                         
@@ -167,7 +167,7 @@ const Services = ({ onBookService }: ServicesProps) => {
                               e.stopPropagation(); // Prevents toggle minimize
                               onBookService(exp.title);
                             }}
-                            className="px-6 py-2.5 bg-[#1C3326] text-white hover:bg-[#A6823C] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-sm"
+                            className="px-6 py-2.5 bg-[#1C3326] text-[#FAF8F5] hover:bg-[#D4AF37] hover:text-[#030510] hover:shadow-[0_0_10px_#D4AF37] rounded-full font-body text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-sm cursor-pointer"
                           >
                             Request Consultation
                           </button>

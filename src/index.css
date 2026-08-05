@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #0F1110; /* Deep Charcoal */
-  --color-primary-hover: #121513;
-  --color-secondary: #FFFFFF; /* Alabaster */
-  --color-secondary-hover: #EFECE6;
-  --color-bg-custom: #FAF8F5; /* Warm Ivory */
-  --color-text-custom: #0F1110;
-  --color-text-muted: #4F5651; /* Stone Grey */
-  --color-accent-forest: #1C3326; /* Deep Forest Green */
-  --color-accent-gold: #A6823C; /* Muted Gold / Sand */
-  --color-bg-block: #FFFFFF; /* Soft Beige */
+  --color-primary: #F8F7F4;
+  --color-primary-hover: #EFECE6;
+  --color-secondary: #030510;
+  --color-secondary-hover: #0A0E1F;
+  --color-bg-custom: #030510;
+  --color-text-custom: #F8F7F4;
+  --color-text-muted: #B8B5C4;
+  --color-accent-forest: #1C3326;
+  --color-accent-gold: #D4AF37;
+  --color-bg-block: #0A0E1F;
   --font-heading: 'Cormorant Garamond', serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
 }
@@ -52,14 +52,14 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF8F5;
+  background: #030510;
 }
 ::-webkit-scrollbar-thumb {
-  background: #A6823C;
+  background: #D4AF37;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #A6823C;
+  background: #EFECE6;
 }
 
 
@@ -83,6 +83,18 @@
 @keyframes pulse-glow {
   0%, 100% { opacity: 0.6; transform: scale(1); }
   50% { opacity: 0.9; transform: scale(1.08); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.7; }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes spin-reverse-slow {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
 }
 .animate-float-slow {
   animation: float-slow 16s ease-in-out infinite;

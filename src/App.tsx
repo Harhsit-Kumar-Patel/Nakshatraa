@@ -76,7 +76,7 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#FAF8F5] text-[#0F1110] paper-grain overflow-x-hidden selection:bg-[#A6823C]/30 selection:text-[#0F1110]">
+    <div className="relative min-h-screen bg-[#030510] text-[#F8F7F4] paper-grain overflow-x-hidden selection:bg-[#D4AF37]/30 selection:text-[#F8F7F4]">
       {errorLog && (
         <div className="fixed top-0 left-0 right-0 z-[99999] bg-red-600 text-white p-4 font-mono text-xs select-text">
           <strong>JS Error Encountered:</strong> {errorLog}
@@ -100,7 +100,7 @@ function App() {
           {/* Global Screen Spotlight with Custom Color Gradient & Grid Pattern */}
           <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
             <Spotlight
-              className="bg-gradient-to-tr from-[#A6823C]/12 via-[#C67B5C]/8 to-[#8B7BB3]/8 blur-3xl"
+              className="bg-gradient-to-tr from-[#D4AF37]/10 via-[#2A1B4A]/15 to-[#1B1035]/15 blur-3xl"
               size={550}
               springOptions={{
                 bounce: 0.15,
@@ -118,8 +118,8 @@ function App() {
                 >
                   <path
                     d="M0 8H8M8 8V0M8 8H16M8 8V16"
-                    stroke="#A6823C"
-                    strokeOpacity="0.08"
+                    stroke="#D4AF37"
+                    strokeOpacity="0.06"
                     strokeWidth="0.5"
                   />
                   <rect
@@ -127,8 +127,8 @@ function App() {
                     y="7"
                     width="2"
                     height="2"
-                    fill="#A6823C"
-                    fillOpacity="0.12"
+                    fill="#D4AF37"
+                    fillOpacity="0.1"
                   />
                 </pattern>
               </defs>
@@ -163,7 +163,7 @@ function App() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-                className="fixed inset-0 z-50 flex justify-end bg-[#0F1110]/40 backdrop-blur-sm"
+                 className="fixed inset-0 z-50 flex justify-end bg-[#030510]/60 backdrop-blur-sm"
               >
                 {/* Backdrop Click */}
                 <div 
@@ -177,16 +177,16 @@ function App() {
                   animate={{ x: 0 }}
                   exit={{ x: '100%' }}
                   transition={{ type: 'tween', ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
-                  className="relative w-full max-w-2xl bg-[#FAF8F5] h-full shadow-2xl p-8 md:p-12 overflow-y-auto z-10 paper-grain flex flex-col justify-between"
+                  className="relative w-full max-w-2xl bg-[#0A0E1F] h-full shadow-2xl p-8 md:p-12 overflow-y-auto z-10 paper-grain flex flex-col justify-between border-l border-[#D4AF37]/10"
                 >
                   {/* Exit header */}
-                  <div className="flex justify-between items-center mb-8 border-b border-[#A6823C]/10 pb-4">
-                    <span className="font-heading text-xl font-light tracking-widest text-[#A6823C]">
+                  <div className="flex justify-between items-center mb-8 border-b border-[#D4AF37]/10 pb-4">
+                    <span className="font-heading text-xl font-light tracking-widest text-[#D4AF37]">
                       NAKSHATRA
                     </span>
                     <button
                       onClick={() => setIsBookingOpen(false)}
-                      className="p-2 text-[#4F5651] hover:text-[#0F1110] transition-colors focus:outline-none "
+                      className="p-2 text-[#B8B5C4] hover:text-[#F8F7F4] transition-colors focus:outline-none "
                       aria-label="Close booking modal"
                     >
                       <X className="w-5 h-5" />
@@ -195,10 +195,10 @@ function App() {
 
                   {/* Form Container */}
                   <div className="flex-grow">
-                    <h3 className="font-heading text-3xl font-light text-[#0F1110] mb-2 text-left">
+                    <h3 className="font-heading text-3xl font-light text-[#F8F7F4] mb-2 text-left">
                       Consultation Booking
                     </h3>
-                    <p className="font-body text-xs text-[#4F5651] mb-8 text-left">
+                    <p className="font-body text-xs text-[#B8B5C4] mb-8 text-left">
                       Please enter your details below. Astrological transits will be calculated based on your birth coordinates.
                     </p>
                     <BookingForm 

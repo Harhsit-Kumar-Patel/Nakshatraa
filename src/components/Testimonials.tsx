@@ -173,11 +173,11 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="py-14 md:py-18 bg-[#FAF8F5] relative z-10 border-b border-[#A6823C]/10 overflow-hidden">
+    <section id="testimonials" className="py-14 md:py-18 bg-[#030510] text-[#F8F7F4] relative z-10 border-b border-[#D4AF37]/10 overflow-hidden">
       
       {/* Decorative top/bottom lines */}
-      <div className="absolute top-0 inset-x-12 h-[1px] bg-[#A6823C]/10" />
-      <div className="absolute bottom-0 inset-x-12 h-[1px] bg-[#A6823C]/10" />
+      <div className="absolute top-0 inset-x-12 h-[1px] bg-[#D4AF37]/10" />
+      <div className="absolute bottom-0 inset-x-12 h-[1px] bg-[#D4AF37]/10" />
 
       <InView
         variants={containerVariants}
@@ -187,13 +187,13 @@ const Testimonials = () => {
         
         {/* Section Header */}
         <motion.div variants={itemVariants} className="text-left mb-16 max-w-xl">
-          <span className="font-body text-[10px] uppercase tracking-[0.25em] text-[#4F5651] font-semibold block mb-4">
+          <span className="font-body text-[10px] uppercase tracking-[0.25em] text-[#B8B5C4] font-semibold block mb-4">
             Client Reflections
           </span>
-          <h2 className="font-heading text-4xl font-light text-[#0F1110]">
+          <h2 className="font-heading text-4xl font-light text-[#F8F7F4] tracking-[0.02em]">
             Stories of clarity.
           </h2>
-          <div className="w-12 h-[1px] bg-[#A6823C] mt-6" />
+          <div className="w-12 h-[1px] bg-[#D4AF37] mt-6" />
         </motion.div>
 
         {/* Stage Slider Window */}
@@ -204,25 +204,25 @@ const Testimonials = () => {
                 <CarouselItem key={item.id} className="w-full shrink-0 px-4">
                   <div
                     onClick={() => setSelectedReview(item)}
-                    className="w-full bg-[#FFFFFF] border border-[#A6823C]/10 hover:border-[#A6823C]/35 p-8 md:p-10 rounded-3xl text-left flex flex-col justify-between min-h-[250px] transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer group"
+                    className="w-full bg-[#0A0E1F]/60 border border-[#D4AF37]/10 hover:border-[#D4AF37]/35 p-8 md:p-10 rounded-3xl text-left flex flex-col justify-between min-h-[250px] transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer group backdrop-blur-sm"
                   >
                     <div className="space-y-4">
-                      <span className="font-heading text-4xl text-[#A6823C]/30 leading-none block select-none">“</span>
-                      <p className="font-body text-base text-[#4F5651] leading-relaxed font-light">
+                      <span className="font-heading text-4xl text-[#D4AF37]/30 leading-none block select-none">“</span>
+                      <p className="font-body text-base text-[#F5F3EF] leading-relaxed font-light">
                         {truncateText(item.quote, 180)}
                       </p>
                     </div>
 
-                    <div className="mt-8 pt-6 border-t border-[#A6823C]/10 flex justify-between items-baseline">
+                    <div className="mt-8 pt-6 border-t border-[#D4AF37]/10 flex justify-between items-baseline">
                       <div>
-                        <span className="block font-body text-xs uppercase tracking-wider text-[#0F1110] font-semibold">
+                        <span className="block font-body text-xs uppercase tracking-wider text-[#F8F7F4] font-semibold">
                           {item.name}
                         </span>
-                        <span className="block font-body text-[10px] text-[#4F5651] font-light mt-0.5">
+                        <span className="block font-body text-[10px] text-[#B8B5C4] font-light mt-0.5">
                           {item.role}
                         </span>
                       </div>
-                      <span className="font-body text-xs text-[#A6823C] font-semibold transition-colors duration-300 group-hover:text-[#1C3326] whitespace-nowrap ml-4">
+                      <span className="font-body text-xs text-[#D4AF37] font-semibold transition-colors duration-300 group-hover:text-[#F8F7F4] whitespace-nowrap ml-4">
                         Read Full Review →
                       </span>
                     </div>
@@ -244,10 +244,10 @@ const Testimonials = () => {
                 aria-label={`Go to slide ${idx + 1}`}
                 onClick={() => setActiveIdx(idx)}
                 className={cn(
-                  "h-10 w-10 rounded-full border text-[10px] font-semibold tracking-widest transition-all duration-300 font-body flex items-center justify-center shadow-sm",
+                  "h-10 w-10 rounded-full border text-[10px] font-semibold tracking-widest transition-all duration-300 font-body flex items-center justify-center shadow-sm cursor-pointer",
                   isSelected
-                    ? "bg-[#1C3326] text-white border-[#1C3326] scale-110"
-                    : "bg-white text-[#4F5651] border-[#A6823C]/15 hover:border-[#A6823C] hover:text-[#0F1110]"
+                    ? "bg-[#1C3326] text-[#FAF8F5] border-[#D4AF37] scale-110"
+                    : "bg-[#0A0E1F] text-[#B8B5C4] border-[#D4AF37]/15 hover:border-[#D4AF37] hover:text-[#F8F7F4]"
                 )}
               >
                 {String(idx + 1).padStart(2, '0')}
@@ -257,8 +257,6 @@ const Testimonials = () => {
         </motion.div>
       </InView>
 
-
-
       {/* Full Detailed Modal Overlay */}
       <AnimatePresence>
         {selectedReview && (
@@ -267,7 +265,7 @@ const Testimonials = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#0F1110]/60 backdrop-blur-md px-6"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#030510]/80 backdrop-blur-md px-6"
           >
             {/* Click backdrop to exit */}
             <div
@@ -278,7 +276,7 @@ const Testimonials = () => {
             {/* Modal Card Container */}
             <div className="relative w-full max-w-2xl z-10 flex items-center justify-center">
               <GlowEffect
-                colors={['#A6823C', '#A6823C', '#4F5651', '#E8E5DF']}
+                colors={['#D4AF37', '#8B7BB3', '#C67B5C', '#1B1035']}
                 mode="breathe"
                 blur="strong"
                 duration={5}
@@ -290,12 +288,12 @@ const Testimonials = () => {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.95, y: 15 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-                className="relative bg-[#FAF8F5] w-full rounded-3xl p-8 md:p-16 shadow-2xl text-left paper-grain border border-[#A6823C]/5 z-10"
+                className="relative bg-[#0A0E1F] w-full rounded-3xl p-8 md:p-16 shadow-2xl text-left paper-grain border border-[#D4AF37]/15 z-10"
               >
                 {/* Close Button */}
                 <button
                   onClick={() => setSelectedReview(null)}
-                  className="absolute top-6 right-6 p-2 text-[#4F5651] hover:text-[#0F1110] transition-colors focus:outline-none "
+                  className="absolute top-6 right-6 p-2 text-[#B8B5C4] hover:text-[#F8F7F4] transition-colors focus:outline-none cursor-pointer"
                   aria-label="Close modal"
                 >
                   <X className="w-5 h-5" />
@@ -303,21 +301,21 @@ const Testimonials = () => {
 
                 <div className="space-y-8 mt-4">
                   {/* Decorative quote mark */}
-                  <span className="font-heading text-7xl text-[#A6823C] leading-none block select-none h-4">“</span>
+                  <span className="font-heading text-7xl text-[#D4AF37] leading-none block select-none h-4">“</span>
 
                   {/* Full Quote */}
-                  <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-light text-[#0F1110] leading-relaxed italic pr-4 md:pr-12">
+                  <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-light text-[#F8F7F4] leading-relaxed italic pr-4 md:pr-12">
                     {selectedReview.quote}
                   </h3>
 
-                  <div className="w-12 h-[1px] bg-[#A6823C]" />
+                  <div className="w-12 h-[1px] bg-[#D4AF37]" />
 
                   {/* Author Credentials */}
                   <div className="space-y-1">
-                    <span className="block font-body text-sm uppercase tracking-widest text-[#0F1110] font-bold">
+                    <span className="block font-body text-sm uppercase tracking-widest text-[#F8F7F4] font-bold">
                       — {selectedReview.name}
                     </span>
-                    <span className="block font-body text-xs text-[#4F5651] font-light">
+                    <span className="block font-body text-xs text-[#B8B5C4] font-light">
                       {selectedReview.role}
                     </span>
                   </div>
