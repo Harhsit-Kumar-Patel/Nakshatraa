@@ -35,91 +35,121 @@ const testimonials = [
     id: 1,
     name: "Dr. Neeraj Singh",
     role: "Varanasi",
-    quote: "I had a wonderful consultation and was truly blown away by the depth and accuracy of the reading. Without asking many details upfront, my current life situation were pinpointed and I got profound clarity on my career and personal life. The given remedies and suggestions are simple, logical, and very practical to follow, rather than being confusing or fear-driven. I left the session feeling calm, positive, and deeply guided. Highly recommended to anyone seeking honest and meaningful direction!"
+    quote: "I honestly didn't expect the session to be this precise 🎯. Without me explaining much, she picked up exactly what was going on in my career and personal life. No scare tactics, no vague promises — just simple, practical remedies I could actually follow. I walked out feeling calm and clear-headed 🙏. Would recommend to anyone who wants honest direction, not drama."
   },
   {
     id: 2,
     name: "Shivangi Singh",
     role: "Delhi",
-    quote: "I recently consulted this astrologer regarding my horoscope, and I was genuinely impressed by the experience. The analysis was detailed, thoughtful, and based on a thorough understanding of my birth chart. She explained the planetary influences in a clear and practical manner, making it easy to understand both current challenges and future opportunities. What stood out most was the honest and balanced guidance. Rather than making unrealistic promises, the advice was realistic, insightful, and focused on actionable remedies and personal growth."
+    quote: "I went in for a horoscope reading and came out genuinely impressed ✨. She'd clearly studied my birth chart in depth before we even spoke. The way she broke down the planetary influences was practical, not preachy. What I appreciated most was that she didn't oversell anything — just realistic guidance and remedies I could work with 👍."
   },
   {
     id: 3,
     name: "Shreya Patel",
     role: "Teacher, Ghazipur",
-    quote: "Consulting with Nakshatra was a truly eye-opening experience. What impressed me most was how deeply they understood my chart and how seamlessly they translated complex astrological concepts into plain, actionable advice. Their predictions were accurate, and their logical approach gave me immense confidence. I will definitely be returning for future guidance."
+    quote: "Nakshatra se baat karna sach mein eye-opening tha 🌟. Sabse zyada impress karne wali baat ye thi ki unhone mera chart itni depth se samjha aur itni asaani se explain kiya ki complicated cheezein bhi simple lagne lagi. Predictions bhi kaafi accurate nikle 🔮. Definitely dobara consult karungi."
   },
   {
     id: 4,
     name: "Khushi Wadhwani",
-    role: "Student, Raipur, Chattisgarh, India",
-    quote: "I found the reading to be very genuine and insightful. It really resonated with me, and many of the points felt accurate and meaningful. Thank you for such an honest and thoughtful reading."
+    role: "Student, Raipur, Chhattisgarh",
+    quote: "The reading felt very genuine to me 💛. So many points she mentioned actually resonated with things going on in my life right now. Thank you for such an honest and thoughtful session — it meant a lot 🙏."
   },
   {
     id: 5,
     name: "Sumant K. Singh",
     role: "Prayagraj",
-    quote: "I had a really great experience with this astrology reading. The astrologer listened patiently to all my problems, and gave simple, honest, and helpful advice. Everything was explained in a clear way and I left the session feeling much more positive. I would certainly recommend their services to anyone seeking true guidance."
+    quote: "Bahut hi accha experience raha mera 😊. Unhone patience se saari problems suni aur bina kisi jhaad-phoonk ke, seedha aur samajhdaari se solution diya. Sab kuch clearly explain kiya, session ke baad kaafi positive feel hua ✨. Anyone jo genuine guidance chahta hai, unhe main zaroor recommend karunga."
   },
   {
     id: 6,
     name: "Divya Singh",
     role: "Lucknow",
-    quote: "Extremely knowledgeable and precise. Gave me clear insights in to my personal life."
+    quote: "बहुत ज्ञानी और सटीक 👏। मेरी पर्सनल लाइफ को लेकर जो भी उलझनें थीं, उन सब पर बहुत स्पष्ट और सही मार्गदर्शन मिला।"
   },
   {
     id: 7,
     name: "Sneha Singh",
     role: "Noida",
-    quote: "Very accurate predictions and timely solution,very patiently listens to all our problems and also explains the solutions in detail 🙏"
+    quote: "Predictions bilkul accurate the aur solutions bhi time pe mil gaye ⏳. Bahut patience se sabhi problems sune, aur solutions ko bhi detail mein samjhaya 🙏"
   },
   {
     id: 8,
     name: "Kirti Agrawal",
     role: "Student, Ghazipur",
-    quote: "I found the insights provided to be deeply accurate and instrumental in helping me navigate the ups and downs of my journey. I am truly grateful for this platform, which offered valuable clarity and guided my perspective in the right direction."
+    quote: "The insights I got were genuinely spot-on and helped me a lot through some rough patches 🌱. I'm really grateful this platform exists — it gave me clarity when I needed it most and pointed me in the right direction ✨."
   },
   {
     id: 9,
     name: "Tripti Singh",
     role: "Mirzapur",
-    quote: "I am very happy with the consultation. The guidance was clear, easy to understand, and gave me a better way to look at my situation. It was a very positive experience, and I would happily recommend this service to anyone looking for honest and helpful astrology advice."
+    quote: "मुझे कंसल्टेशन से बहुत संतुष्टि मिली 😊। मार्गदर्शन बहुत स्पष्ट था और आसानी से समझ आ गया, जिससे मैं अपनी स्थिति को एक नए नज़रिए से देख पाई। पूरा अनुभव बहुत सकारात्मक रहा 🙌, और मैं इसे उन सभी को सुझाऊंगी जो ईमानदार सलाह चाहते हैं।"
   },
   {
     id: 10,
     name: "Divya Mishra",
     role: "Ghazipur",
-    quote: "Your knowledge of planets and constellations is truly amazing. Heartfelt congratulations to you for that. My dear friend, besides being a wonderful teacher for children, you are also an excellent expert in astrology. Thank you for your guidance and dedication."
+    quote: "Your knowledge of planets and stars is genuinely remarkable 🌌 — congratulations on that. You're already a wonderful teacher to children, and on top of that, an excellent astrologer too 🙏. Thank you for your guidance and the dedication you bring to it."
   },
   {
     id: 11,
     name: "Shalini Singh",
     role: "Varanasi",
-    quote: "I had a wonderful experience with this consultation. The session was friendly, patient, and explained everything in a simple and easy-to-understand way. The advice was honest, helpful, and gave me a lot of confidence. I highly recommend this service."
+    quote: "Session bahut hi friendly aur patient tarike se hui 💫. Sab kuch simple language mein samjhaya gaya, koi confusion nahi raha. Advice bhi honest thi aur confidence bhi mila 👍. Highly recommend karti hoon."
   },
   {
-   id: 12,
+    id: 12,
     name: "Aishwarya Gupta",
     role: "Noida",
-    quote: "had an amazing experience . I usually don't trust astrology services easily, but after taking a consultation from you, my perspective completely changed. The way you explained my horoscope, personality traits, and current life situations felt extremely accurate and personal. Thank you 😊"
-  }, 
+    quote: "I'll be honest, I usually don't trust astrology services easily 🤔. But this consultation completely changed my perspective. The way my horoscope, personality, and current situation were explained felt extremely accurate and personal. Thank you 😊"
+  },
   {
     id: 13,
     name: "Mohit Kumar",
     role: "Noida",
-    quote: "I was feeling completely confused about my career and future. The counseling session at Nakshatraa gave me much-needed clarity and confidence. The guidance wasn't based only on astrology—it was practical, thoughtful, and easy to understand. Every prediction and suggestion was explained patiently, and I left the session feeling positive and hopeful. Thank you for such a genuine experience!"
+    quote: "करियर और भविष्य को लेकर मैं पूरी तरह उलझन में था 😟। Nakshatraa के काउंसलिंग सेशन ने मुझे जो स्पष्टता और आत्मविश्वास दिया, उसकी सख्त ज़रूरत थी। गाइडेंस सिर्फ ज्योतिष तक सीमित नहीं थी — बहुत practical और आसान भाषा में समझाई गई। हर prediction और सुझाव धैर्य से explain किया गया। इतने genuine अनुभव के लिए धन्यवाद! 🙏"
   },
   {
     id: 14,
     name: "Divya Mishra",
     role: "Noida",
-    quote: "I booked a consultation to understand some personal challenges I was facing, and I'm really glad I did. The session was calm, respectful, and insightful. Instead of creating fear, the counselor focused on solutions and explained my birth chart in simple language. I felt heard, supported, and more confident about the decisions ahead. I would definitely recommend Nakshatraa to anyone looking for honest guidance and counseling."
+    quote: "Kuch personal challenges ko samajhne ke liye maine consultation liya tha, aur main bahut khush hoon ki maine ye kiya 😊. Session bahut calm aur respectful tha. Fear create karne ke bajaye, unhone solutions pe focus kiya aur birth chart ko simple language mein samjhaya. Mujhe heard aur supported feel hua, aur apne decisions ko lekar zyada confident bhi 💪. Honest guidance ke liye Nakshatraa ko zaroor recommend karungi."
   },
   {
     id: 15,
     name: "Nidhi Verma",
     role: "Noida",
-    quote: "I had a wonderful experience with this consultation. The session was friendly, patient, and explained everything in a simple and easy-to-understand way. The advice was honest, helpful, and gave me a lot of confidence. I highly recommend this service."
+    quote: "This was such a warm and patient session 💛 — everything explained in the simplest way possible. The advice felt honest and gave me real confidence going forward 🙌. I'd highly recommend this to anyone considering it."
+  },
+  {
+    id: 16,
+    name: "Shreya Singh",
+    role: "Client",
+    quote: "You have a real gift for breaking down complex chart details into something simple and practical 🔮. Your guidance helped me see my path clearly, and I genuinely feel more at peace now 🕊️."
+  },
+  {
+    id: 17,
+    name: "Priyanka Yadav",
+    role: "Client",
+    quote: "Maine kaafi astrologers se baat ki hai, lekin yahan ka approach bilkul different tha ✨. Har cheez itni clarity se explain ki gayi ki confusion hi nahi raha. Genuinely helpful session tha 🙏."
+  },
+  {
+    id: 18,
+    name: "Manohar Yadav",
+    role: "Client",
+    quote: "मैं काफी समय से अपने बिज़नेस को लेकर परेशान था 😔। यहाँ की सलाह बहुत व्यावहारिक और स्पष्ट थी, किसी डर या दिखावे के बिना। अब मुझे आगे का रास्ता साफ़ दिखाई दे रहा है 🌟।"
+  },
+  {
+    id: 19,
+    name: "Shalu Sonkar",
+    role: "Client",
+    quote: "Session bahut hi grounded aur honest laga 🙌. Koi bhi baat exaggerate nahi ki gayi, sab kuch practical tha. Ek baar consult karne ke baad, samajh aa gaya ki asli guidance kaisi honi chahiye 👍."
+  },
+  {
+    id: 20,
+    name: "Smrita Sachan",
+    role: "Client",
+    quote: "I came in with a lot of doubts about a personal decision I had to make 🤯. The way everything was explained — calm, clear, and without any unnecessary drama — genuinely helped me think straight ✨. Really grateful for this 🙏."
   }
 ];
 
